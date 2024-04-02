@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, Navigate } from 'react-router-dom';
 import AccountWrapper from '../AccountWrapper';
 import useLogin, { loginFormSchema } from './useLogin';
-import DefaultAlerts from './AlertsUI';
 import Spinner from '../../../components/Spinner';
 
 const BottomLink = () => {
@@ -66,8 +65,6 @@ export default function Login() {
               <small>Forgot your password?</small>
             </Link>
           </PasswordInput>
-
-          {/* <DefaultAlerts/> */}
           
           <div className="mb-3 text-center">
             {loading ?
@@ -77,7 +74,6 @@ export default function Login() {
                 {t('Log In')}
               </Button>
             }
-            
             
           </div>
         </Form>

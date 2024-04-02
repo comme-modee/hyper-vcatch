@@ -42,6 +42,7 @@ const DatepickerInputWithAddon = forwardRef(
 );
 
 const CustomDatePicker = (props) => {
+
   // handle custom input
   const input =
     (props.hideAddon || false) === true ? (
@@ -71,7 +72,7 @@ const CustomDatePicker = (props) => {
         dateFormat={props.dateFormat || 'MM/dd/yyyy'}
         minDate={props.minDate}
         maxDate={props.maxDate}
-        monthsShown={props.monthsShown}
+        monthsShown={props.monthsShown} //한번에 보여줄 달의 갯수
         showTimeSelectOnly={props.showTimeSelectOnly}
         inline={props.inline}
         autoComplete="off"

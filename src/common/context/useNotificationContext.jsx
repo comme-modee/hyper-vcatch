@@ -13,8 +13,8 @@ function Toastr({ show, title, message, onClose, variant = 'light', delay = 5000
             <strong className="me-auto">{title}</strong>
           </Toast.Header>
         )}
-        <Toast.Body className={['dark', 'danger'].includes(variant) ? 'text-white' : ''}>
-          {message}
+        <Toast.Body className={['dark', 'danger', 'success'].includes(variant) ? 'text-white' : ''}>
+          <h5>{message}</h5>
         </Toast.Body>
       </Toast>
     </ToastContainer>

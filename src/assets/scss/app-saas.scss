@@ -27,11 +27,13 @@ File: Main Css File
 @import "custom/structure/right-sidebar";
 @import "custom/structure/page-head";
 @import "custom/structure/footer";
+
 // Horizontal nav
 @import "custom/structure/horizontal-nav";
 
 // Fonts
-@import "custom/fonts/nunito";
+// @import "custom/fonts/nunito";
+@import "custom/fonts/pretendard";
 
 // Components
 @import "custom/components/root";

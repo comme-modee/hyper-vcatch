@@ -11,6 +11,9 @@ import logoSm from '@/assets/images/logo-sm.png';
 import logoDarkSm from '@/assets/images/logo-dark-sm.png';
 import { getMenuItems } from './utils/menu';
 
+//사용자 권한 확인
+import useGetUserRole from '@/common/api/useGetUserRole';
+
 const UserBox = () => {
 	return (
 		<div className="leftbar-user">
@@ -28,10 +31,12 @@ const UserBox = () => {
 };
 
 const SideBarContent = () => {
+	const userRole = useGetUserRole();
+
 	return (
 		<>
 			<UserBox />
-			<AppMenu menuItems={getMenuItems()} />
+			<AppMenu menuItems={getMenuItems(userRole)} />
 			<div className="clearfix" />
 		</>
 	);
@@ -62,7 +67,7 @@ const LeftSidebar = ({ isCondensed, leftbarDark }) => {
 
 	return (
 		<div className="leftside-menu" ref={menuNodeRef}>
-			<Link to="/" className={`logo ${leftbarDark ? 'logo-light' : 'logo-dark'}`}>
+			<Link to="/monitoring/keyword-week" className={`logo ${leftbarDark ? 'logo-light' : 'logo-dark'}`}>
 				<span className="logo-lg">
 					<img src={leftbarDark ? logo : logoDark} alt="logo" height="16" />
 				</span>

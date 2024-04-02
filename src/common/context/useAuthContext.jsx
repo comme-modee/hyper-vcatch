@@ -15,22 +15,23 @@ const authSessionKey = '_HYPER_AUTH';
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(
     localStorage.getItem(authSessionKey)
-      ? JSON.parse(localStorage.getItem(authSessionKey) || '{}')
-      : undefined
-  );
-
-  const saveSession = useCallback(
-    (user) => {
-      localStorage.setItem(authSessionKey, JSON.stringify(user.token));
-      setUser(user);
-    },
-    [setUser]
-  );
-
-  const removeSession = useCallback(() => {
-    localStorage.removeItem(authSessionKey);
-    setUser(undefined);
-  }, [setUser]);
+    ? localStorage.getItem(authSessionKey) || '{}'
+    : undefined
+    );
+    
+    const saveSession = useCallback(
+      (user) => {
+        localStorage.setItem(authSessionKey, user.token);
+        console.log(user.token)
+        setUser(user);
+      },
+      [setUser]
+      );
+      
+      const removeSession = useCallback(() => {
+        localStorage.removeItem(authSessionKey);
+        setUser(undefined);
+      }, [setUser]);
 
   return (
     <AuthContext.Provider

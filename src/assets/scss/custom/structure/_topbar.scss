@@ -12,12 +12,14 @@
     transition: $transition-base;
     z-index: 1000;
     border-bottom: $card-border-width solid $card-border-color;
+    
 
     .topbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 0 auto;
+        padding: 0;
 
         // Topbar Search from
         .app-search {
@@ -348,6 +350,7 @@ html[data-bs-theme="dark"] {
 
 @include media-breakpoint-down(sm) {
     .navbar-custom {
+        padding: 0;
         .topbar-menu {
             position: initial;
         }
@@ -365,7 +368,8 @@ html[data-bs-theme="dark"] {
 
 @include media-breakpoint-down(md) {
     .navbar-custom {
-        padding: 0 $spacer * 0.5;
+        // padding: 0 $spacer * 0.5;
+        padding: 0;
     }
 
     .logo-topbar {

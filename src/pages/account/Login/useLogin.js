@@ -36,19 +36,19 @@ export default function useLogin() {
 		setLoading(true);
 		
 		try {
-		
-			const res = await authApi.login(values);
-			console.log("로그인 성공. 아이디:", res.data.username);
-			if (res.data) {
-				saveSession({ ...(res.data ?? {}), token:res.data.token });
-				// console.log("LAST")
-				// console.log(location.state+"a")
-				// console.log(location.state.from+"b")
-				navigate(redirectUrl);
+			// console.log("2")
+			let users = await authApi.login(values);
+			// console.log("3", users)
+			if (users) {
+				// console.log("4", users.token)
+				
+				saveSession({ ...(users ?? {}), token:users.token });
+				navigate('/monitoring/keyword-week');
 			} else {
 				console.log("데이터없음")
 			}
 		} catch (error) {
+			console.log("여기")
 			showNotification({ message: error.toString(), type: 'error' });
 		} finally {
 			setLoading(false);

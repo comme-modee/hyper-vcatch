@@ -1,0 +1,162 @@
+/* * { box-sizing: border-box; } */
+.monitoring-card > .card-body > .search-area { display: flex; gap: 0.75rem; }
+.monitoring-card select { width: 200px; }
+.monitoring-card-month > .card-body > .search-area > button { white-space: nowrap;}
+
+.monitoring-table-month { width: 100%; max-width: 1700px; text-align: center; font-size: 16px; }
+.monitoring-table-month p { margin: 0; }
+.monitoring-table-month i { font-size: 20px; cursor: pointer; padding: 0 4px; }
+
+.monitoring-table-month .client { width: 240px; }
+.monitoring-table-month .platform { width: 100px; }
+.monitoring-table-month .keyword { width: 200px; }
+.monitoring-table-month .day { width: 60px; }
+
+.monitoring-table-month > .header { font-weight: 300; display: flex; border-bottom: 1px solid var(--ct-border-color); background-color: var(--ct-menu-bg);; color: #fff; }
+.monitoring-table-month > .body > .content { display: flex; border-bottom: 1px solid var(--ct-border-color); }
+.monitoring-table-month > .header > div,
+.monitoring-table-month > .body > .content > div { padding: 10px 0; display: flex; justify-content: center; align-items: center; }
+.monitoring-table-month > .body > .content > .day,
+.monitoring-table-month > .body > .content > .time { background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
+.monitoring-table-month > .body > .content > .day > .mo,
+.monitoring-table-month > .body > .content > .time > .mo,
+.monitoring-table-month > .body > .content > .total > .mo,
+.monitoring-table-month > .body > .content > .goalrank > .mo { display: none; }
+.monitoring-table-month > .body > .content > .client > p, 
+.monitoring-table-month > .body > .content > .title > p {
+    margin: 0 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.monitoring-pagination { display: flex; justify-content: center; }
+
+.monitoring-table-month { width: 100%; max-width: 2400px; }
+
+@media screen and (max-width: 1760px) {
+    .monitoring-card > .card-body { padding: 14px; }
+    .monitoring-card > .card-body > .search-area { gap: 6px; }
+    .monitoring-table-month { font-size: 14px; }
+    .monitoring-table-month > .header { display: grid; grid-template-columns: 37.5% 25% 37.5%; border-bottom: initial; }
+    .monitoring-table-month > .header > div { width: initial; }
+    .monitoring-table-month > .body > .content > div { width: initial; }
+    .monitoring-table-month > .header > .time,
+    .monitoring-table-month > .header > .total,
+    .monitoring-table-month > .header > .goalrank,
+    .monitoring-table-month > .header > .title,
+    .monitoring-table-month > .header > .url,
+    .monitoring-table-month > .header > .day { display: none; }
+    .monitoring-table-month > .body > .content > .day > .mo,
+    .monitoring-table-month > .body > .content > .time > .mo,
+    .monitoring-table-month > .body > .content > .total > .mo,
+    .monitoring-table-month > .body > .content > .goalrank > .mo { display: block; }
+
+    .monitoring-table-month > .body > .content {
+        border-bottom: initial;
+        width: 100%;
+        height: 200px;
+        display: grid;
+        grid: 
+            "client client client platform platform keyword keyword keyword" 20%
+            "title title title title title title title url" 20%
+            "total total total total goalrank goalrank goalrank goalrank" 20%
+            "time1 time2 time3 time4 time5 time6 time7 time8" 40%
+             /12.5%   12.5%   12.5%   12.5%   12.5%   12.5%   12.5%   12.5%
+    }
+    .monitoring-table-month > .body > .content > .client { grid-area: client; background-color: rgba(var(--ct-primary-rgb)); color: rgba(var(--ct-white-rgb)); font-weight: 300; }
+    .monitoring-table-month > .body > .content > .platform { grid-area: platform; background-color: rgba(var(--ct-primary-rgb)); color: rgba(var(--ct-white-rgb)); font-weight: 300; }
+    .monitoring-table-month > .body > .content > .keyword { grid-area: keyword; background-color: rgba(var(--ct-primary-rgb)); color: rgba(var(--ct-white-rgb)); font-weight: 300; }
+    .monitoring-table-month > .body > .content > .time9 { grid-area: time1; }
+    .monitoring-table-month > .body > .content > .time10 { grid-area: time2; }
+    .monitoring-table-month > .body > .content > .time11 { grid-area: time3; }
+    .monitoring-table-month > .body > .content > .time13 { grid-area: time4; }
+    .monitoring-table-month > .body > .content > .time14 { grid-area: time5; }
+    .monitoring-table-month > .body > .content > .time15 { grid-area: time6; }
+    .monitoring-table-month > .body > .content > .time16 { grid-area: time7; }
+    .monitoring-table-month > .body > .content > .time17 { grid-area: time8; }
+    .monitoring-table-month > .body > .content > .total { grid-area: total; }
+    .monitoring-table-month > .body > .content > .goalrank { grid-area: goalrank; }
+    .monitoring-table-month > .body > .content > .title { grid-area: title; padding: 10px 40px; }
+    .monitoring-table-month > .body > .content > .url { grid-area: url; display: flex; align-items: center; justify-content: space-evenly; }
+    .monitoring-table-month > .body > .content > .day,
+    .monitoring-table-month > .body > .content > .time,
+    .monitoring-table-month > .body > .content > .total,
+    .monitoring-table-month > .body > .content > .goalrank { padding: 0; background-color: initial; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .monitoring-table-month > .body > .content > .total,
+    .monitoring-table-month > .body > .content > .goalrank { flex-direction: row; }
+    .monitoring-table-month > .body > .content > .day > .mo,
+    .monitoring-table-month > .body > .content > .time > .mo,
+    .monitoring-table-month > .body > .content > .total > .mo,
+    .monitoring-table-month > .body > .content > .goalrank > .mo,
+    .monitoring-table-month > .body > .content > .day > p,
+    .monitoring-table-month > .body > .content > .time > p,
+    .monitoring-table-month > .body > .content > .total > p,
+    .monitoring-table-month > .body > .content > .goalrank > p { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+    .monitoring-table-month > .body > .content > .day > .mo,
+    .monitoring-table-month > .body > .content > .time > .mo { background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
+    .monitoring-table-month > .body > .content > .total > p,
+    .monitoring-table-month > .body > .content > .goalrank > p { border: 2px solid #ffece6; }
+    .monitoring-table-month > .body > .content > .total > .mo,
+    .monitoring-table-month > .body > .content > .goalrank > .mo { background-color: #ffece6; }
+
+
+    /* 월간 테이블 */
+    .monitoring-table-month > .header { grid-template-columns: 40% 20% 40%; }
+    .monitoring-table-month > .body > .content {
+        height: 280px;
+        grid: 
+            "client client client client platform platform keyword keyword keyword keyword" 40px
+            "day1 day2 day3 day4 day5 day6 day7 day8 day9 day10" 80px
+            "day11 day12 day13 day14 day15 day16 day17 day18 day19 day20" 80px
+            "day21 day22 day23 day24 day25 day26 day27 day28 day29 day30" 80px
+             /10%   10%   10%   10%   10%   10%   10%   10%   10%   10%
+    }
+    .monitoring-table-month > .body > .content > .day1 { grid-area: day1; }
+    .monitoring-table-month > .body > .content > .day2 { grid-area: day2; }
+    .monitoring-table-month > .body > .content > .day3 { grid-area: day3; }
+    .monitoring-table-month > .body > .content > .day4 { grid-area: day4; }
+    .monitoring-table-month > .body > .content > .day5 { grid-area: day5; }
+    .monitoring-table-month > .body > .content > .day6 { grid-area: day6; }
+    .monitoring-table-month > .body > .content > .day7 { grid-area: day7; }
+    .monitoring-table-month > .body > .content > .day8 { grid-area: day8; }
+    .monitoring-table-month > .body > .content > .day9 { grid-area: day9; }
+    .monitoring-table-month > .body > .content > .day10 { grid-area: day10; }
+    .monitoring-table-month > .body > .content > .day11 { grid-area: day11; }
+    .monitoring-table-month > .body > .content > .day12 { grid-area: day12; }
+    .monitoring-table-month > .body > .content > .day13 { grid-area: day13; }
+    .monitoring-table-month > .body > .content > .day14 { grid-area: day14; }
+    .monitoring-table-month > .body > .content > .day15 { grid-area: day15; }
+    .monitoring-table-month > .body > .content > .day16 { grid-area: day16; }
+    .monitoring-table-month > .body > .content > .day17 { grid-area: day17; }
+    .monitoring-table-month > .body > .content > .day18 { grid-area: day18; }
+    .monitoring-table-month > .body > .content > .day19 { grid-area: day19; }
+    .monitoring-table-month > .body > .content > .day20 { grid-area: day20; }
+    .monitoring-table-month > .body > .content > .day21 { grid-area: day21; }
+    .monitoring-table-month > .body > .content > .day22 { grid-area: day22; }
+    .monitoring-table-month > .body > .content > .day23 { grid-area: day23; }
+    .monitoring-table-month > .body > .content > .day24 { grid-area: day24; }
+    .monitoring-table-month > .body > .content > .day25 { grid-area: day25; }
+    .monitoring-table-month > .body > .content > .day26 { grid-area: day26; }
+    .monitoring-table-month > .body > .content > .day27 { grid-area: day27; }
+    .monitoring-table-month > .body > .content > .day28 { grid-area: day28; }
+    .monitoring-table-month > .body > .content > .day29 { grid-area: day29; }
+    .monitoring-table-month > .body > .content > .day30 { grid-area: day30; }
+    .monitoring-table-month > .body > .content > .day31 { display: none; }
+}
+
+@media screen and (max-width: 480px) {
+    
+    .monitoring-card { padding: 8px; gap: 14px; }
+    .monitoring-card > .card-body { padding: 0; }
+    .monitoring-card > .card-body > .search-area { flex-direction: column; gap: 6px; }
+
+    .monitoring-card-month > .card-body > .search-area { display: block; }
+    .monitoring-card-month > .card-body > .search-area > #platform-select { width: 45%; display: inline; }
+    .monitoring-card-month > .card-body > .search-area > #year-select { width: 30%; display: inline; }
+    .monitoring-card-month > .card-body > .search-area > #month-select { width: 25%; display: inline; }
+    .monitoring-card-month > .card-body > .search-area > button { width: 50%; display: inline; margin-top: 10px; }
+}

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { notifications, profileMenus, searchOptions } from './data';
 import LanguageDropdown from './LanguageDropdown';
 import NotificationDropdown from './NotificationDropdown';
@@ -8,6 +8,8 @@ import TopbarSearch from './TopbarSearch';
 import AppsDropdown from './AppsDropdown';
 import MaximizeScreen from './MaximizeScreen';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+
 
 // assets
 import userImage from '@/assets/images/users/avatar-1.jpg';
@@ -15,19 +17,54 @@ import logo from '@/assets/images/logo.png';
 import logoDark from '@/assets/images/logo-dark.png';
 import logoSm from '@/assets/images/logo-sm.png';
 import logoDarkSm from '@/assets/images/logo-dark-sm.png';
-import { ThemeSettings, useThemeContext } from '@/common';
+import { ThemeSettings, useThemeContext, useUserInfoContext } from '@/common';
 import useThemeCustomizer from '@/components/ThemeCustomizer/useThemeCustomizer';
 import { useViewport } from '@/hooks';
+import useGetUserRole from '@/common/api/useGetUserRole';
+import { useState, useEffect } from 'react';
+import useGetClientList from './useGetClientList';
+import './Topbar.style.css';
 
-//로그인한 사용자 정보
-import { users } from '../../common/api/fake-backend';
 
 const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
+	const [ userInfo, setUserInfo ] = useState(JSON.parse(localStorage.getItem('userInfo')));
 	const { settings, updateSettings, updateSidebar } = useThemeContext();
+	const { data:clientListData, getClientList } = useGetClientList();
+	const [ showClientSelectBox, setShowClientSelectBox ] = useState(false);
+	const location = useLocation();
 
 	const { sideBarType } = useThemeCustomizer();
 
 	const { width } = useViewport();
+
+	//로그인한 사용자 정보
+	const userRole = useGetUserRole();
+	
+	//셀렉트박스에서 클라이언트 선택하면 saveClientUid로 전달
+	const [ client, setClient ] = useState('');
+
+	//clientUid 저장
+	const { saveClientUid } = useUserInfoContext(); 
+
+	useEffect(()=>{
+		if(userInfo) {
+			getClientList(userInfo.username)
+		}
+		if(location.pathname === '/monitoring/keyword-week' || location.pathname === '/monitoring/keyword-24hour' || location.pathname === '/monitoring/keyword-month') {
+			setShowClientSelectBox(true)
+		} else {
+			setShowClientSelectBox(false)
+		}
+	},[userInfo, location])
+
+	useEffect(()=>{
+		if(client || client === '') {
+			saveClientUid(client)
+			console.log("22", client)
+		}
+	},[client])
+
+	
 
 
 	/**
@@ -98,7 +135,7 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 		<div className={'navbar-custom'}>
 			<div className="topbar container-fluid">
 				<div className="d-flex align-items-center gap-lg-2 gap-1">
-					<div className="logo-topbar">
+					{/* <div className="logo-topbar">
 						<Link to="/" className={topbarDark ? 'logo-light' : 'logo-dark'}>
 							<span className="logo-lg">
 								<img src={topbarDark ? logo : logoDark} alt="logo" />
@@ -107,7 +144,7 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 								<img src={topbarDark ? logoSm : logoDarkSm} alt="small logo" />
 							</span>
 						</Link>
-					</div>
+					</div> */}
 
 					<button className="button-toggle-menu" onClick={handleLeftMenuCallBack}>
 						<i className="mdi mdi-menu" />
@@ -124,7 +161,14 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 						</div>
 					</button>
 
-					<TopbarSearch options={searchOptions} />
+					{/* 클라이언트 셀렉트 박스 */}
+					{showClientSelectBox ? 
+						<Form.Select id='client-select' defaultValue='' aria-label="Default select example" onChange={(e) => setClient(e.target.value)}>
+							<option value=''>클라이언트 검색</option>
+							{clientListData && clientListData.map((client) => <option key={client.client_uid} value={client.client_uid}>{client.client_name}</option>)}
+						</Form.Select>
+					: <></> }
+
 				</div>
 
 				<ul className="topbar-menu d-flex align-items-center gap-3">
@@ -132,30 +176,15 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 						<SearchDropdown />
 					</li>
 
-					{/* 언어선택 */}
-					{/* <li className="dropdown">
-						<LanguageDropdown />
-					</li> */}
-
-					{/* 알림 */}
-					{/* <li className="dropdown notification-list">
-						<NotificationDropdown notifications={notifications} />
-					</li> */}
-
-					{/* app 이동 */}
-					{/* <li className="dropdown d-none d-sm-inline-block">
-						<AppsDropdown />
-					</li> */}
-
 					{/* 테마 세팅 */}
-					<li className="d-none d-sm-inline-block">
+					{/* <li className="d-none d-sm-inline-block">
 						<button
 							className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
 							onClick={handleRightSideBar}
 						>
 							<i className="ri-settings-3-line font-22"></i>
 						</button>
-					</li>
+					</li> */}
 
 					{/* 테마 모드 변경 */}
 					<li className="d-none d-sm-inline-block">
@@ -179,8 +208,8 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 						<ProfileDropdown
 							userImage={userImage}
 							menuItems={profileMenus}
-							username={users[0].username}
-							userTitle={users[0].role}
+							username={userInfo.username}
+							userTitle={userRole}
 						/>
 					</li>
 				</ul>

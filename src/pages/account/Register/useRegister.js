@@ -17,7 +17,11 @@ export default function useRegister() {
 
 	const schema = yup.object().shape({
 		username: yup.string().required(t('Please enter name')),
-		email: yup.string().email('Please enter valid email').required(t('Please enter email')),
+		email: yup
+			.string()
+			// .email('Please enter valid email')
+			.matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/i, 'email형식에 맞지 않습니다.')
+			.required(t('Please enter email')),
 		password1: yup
 			.string()
 			.required(t('Please enter password'))
@@ -42,9 +46,9 @@ export default function useRegister() {
 				phone,
 				email,
 			});
-			console.log(res.config.data)
-			//fake-backend에서 resolve되면 밑에 if문 진행
-			if (res?.config.data) {
+			console.log("res: ",res)
+			//join에서 resolve되면 밑에 if문 진행
+			if (res) {
 				showNotification({
 					message: 'Registration successful. Welcome aboard!',
 					type: 'success',
@@ -52,7 +56,7 @@ export default function useRegister() {
 				navigate('/account/login');
 			}
 		} catch (error) {
-			//fake-backend에서 reject되면 error메세지 출력
+			//join에서 reject되면 error메세지 출력
 			showNotification({ message: error.toString(), type: 'error' });
 		} finally {
 			setLoading(false);

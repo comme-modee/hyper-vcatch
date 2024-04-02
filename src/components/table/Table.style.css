@@ -1,0 +1,18 @@
+/* 
+.monitoring-table-wrapper { width: 100%; max-width: 1700px; }
+.monitoring-table { width: 100%; max-width: 1700px; text-align: center; font-size: 12px; }
+.monitoring-table th,
+.monitoring-table td { padding: 8px !important; }
+.monitoring-table p { margin: 0; }
+
+.monitoring-table > tbody > tr > td:nth-child(15) > p,
+.monitoring-table > tbody > tr > td:nth-child(16) > p {
+    margin: 0 auto;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+} */

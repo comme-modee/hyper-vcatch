@@ -141,7 +141,8 @@
 $datepicker__background-color: $dropdown-bg;
 $datepicker__border-color: $dropdown-border-color;
 $datepicker__highlighted-color: $primary;
-$datepicker__muted-color: #{map-get($grays, "600")};
+// $datepicker__muted-color: #{map-get($grays, "600")};
+$datepicker__muted-color: #ced8dd;
 $datepicker__selected-color: $primary;
 $datepicker__text-color: #{map-get($grays, "600")};
 $datepicker__header-color: #{map-get($grays, "600")};
@@ -523,6 +524,7 @@ $datepicker__triangle-size: 8px;
                         color: $datepicker__muted-color;
 
                         &:hover {
+                            color: $datepicker__muted-color;
                             cursor: default;
                             background-color: transparent;
                         }
@@ -657,11 +659,13 @@ $datepicker__triangle-size: 8px;
         }
     }
 
+    // 날짜 비활성화 되었을때 css
     &--disabled {
         cursor: default;
-        color: $datepicker__muted-color;
+        color: RGBA(var(--ct-light-rgb));
 
         &:hover {
+            color: RGBA(var(--ct-light-rgb)) !important;
             background-color: transparent;
         }
     }

@@ -1,11 +1,47 @@
+import * as yup from 'yup';
+import { authApi, useNotificationContext } from '@/common';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Form, PasswordInput, TextInput } from '@/components';
 import { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { CustomDatePicker } from '@/components';
-import { Card } from 'react-bootstrap';
+import Spinner from '../../../components/Spinner';
+import './Edit.style.css';
 
 // 계정 정보 변경
 const Edit = () => {
+	const { t } = useTranslation();
+	const [ loading, setLoading ] = useState(false);
+	const { showNotification } = useNotificationContext();
+	const navigate = useNavigate();
+
+	//로그인한 사용자 정보
+	const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+	const schema = yup.object().shape({
+		password: yup.string().required('Please enter password'),
+	});
+
+	
+	const confirmUserInfo = async (value) => {
+		setLoading(true)
+		const { username, password } = value;
+		// console.log("userInfo: ", value)
+
+		try {
+			const res = await authApi.confirmUserInfo(value);
+            if(res) {
+				// navigate('/user-account/edit-user')
+            } else {
+                showNotification({ message: "비밀번호가 일치하지 않습니다. 다시 확인해주세요.", type: 'error' });
+            }
+        } catch {
+
+        } finally {
+			setLoading(false)
+		}
+
+	}
 
 	return (
 		<>
@@ -20,7 +56,70 @@ const Edit = () => {
 				<Col xs={12}>
 					<Card>
 						<Card.Body>
-							계정 정보 변경 내용
+
+
+							{/* <Form onSubmit={confirmUserInfo}>
+								<Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+									<Form.Label column sm="2">
+									ID
+									</Form.Label>
+									<Col sm="10">
+									<Form.Control plaintext readOnly defaultValue={userInfo.username} />
+									</Col>
+								</Form.Group>
+
+								<Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+									<Form.Label column sm="2">
+									Password
+									</Form.Label>
+									<Col sm="10">
+									<Form.Control type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
+									</Col>
+								</Form.Group>
+								<Button variant='primary' type='submit'>확인</Button>
+							</Form> */}
+
+
+
+							<Form
+								onSubmit={confirmUserInfo}
+								schema={schema}
+								defaultValues={{
+								username: userInfo.username,
+								}}
+								className='edit-form'
+							>
+
+								<TextInput
+									label={t('ID')}
+									type="text"
+									name="username"
+									readOnly
+									containerClass="mb-3 mt-3"
+								/>
+
+								<PasswordInput
+									label={t('Password')}
+									name="password"
+									placeholder={t('Enter your password')}
+									containerClass="mb-3"
+									errors
+								/>
+
+								<div className="mb-3 text-center">
+									{loading ?
+									<Spinner color='primary' size='sm' className='m-auto'/>
+									:
+									<Button variant="primary" type="submit">
+									{t('확인')}
+									</Button>
+									}
+								</div>
+            
+							</Form>
+							
+
+
 						</Card.Body>
 					</Card>
 				</Col>

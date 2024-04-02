@@ -1,5 +1,5 @@
 import AppRoutes from '@/routes';
-import { AuthProvider, NotificationProvider, ThemeProvider } from '@/common/context';
+import { UserInfoProvider, AuthProvider, NotificationProvider, ThemeProvider } from '@/common/context';
 import { configureFakeBackend } from './common';
 
 // For Saas import Saas.scss
@@ -18,7 +18,9 @@ const App = () => {
 		<ThemeProvider>
 			<NotificationProvider>
 				<AuthProvider>
-					<AppRoutes />
+					<UserInfoProvider>
+						<AppRoutes />
+					</UserInfoProvider>
 				</AuthProvider>
 			</NotificationProvider>
 		</ThemeProvider>

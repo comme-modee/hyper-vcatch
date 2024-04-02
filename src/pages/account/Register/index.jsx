@@ -1,13 +1,14 @@
-import { CheckInput, Form, PasswordInput, TextInput, PageBreadcrumb } from '@/components';
+import { Form, PasswordInput, PageBreadcrumb, TextInput } from '@/components';
 import { Button, Col, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate } from 'react-router-dom';
 import AccountWrapper from '../AccountWrapper';
 import useRegister from './useRegister';
+import IdInput from './IdInput'
 
 const BottomLink = () => {
 	const { t } = useTranslation();
-
+	
 	return (
 		<Row className="mt-3">
 			<Col className="text-center">
@@ -26,7 +27,7 @@ export default function Register() {
 	const { t } = useTranslation();
 
 	const { loading, register, isAuthenticated, schema } = useRegister();
-	// console.log(schema)
+
 
 	return (
 		<>
@@ -41,6 +42,7 @@ export default function Register() {
 						)}
 					</p>
 				</div>
+				
 
 				<Form
 					onSubmit={register}
@@ -53,13 +55,14 @@ export default function Register() {
 						email: 'user1@gmail.com',
 					}}
 				>
-					<TextInput
+					<IdInput
 						label={t('ID')}
 						type="text"
 						name="username"
 						placeholder={t('Enter your name')}
 						containerClass="mb-3"
 					/>
+
 					<PasswordInput
 						label={t('Password')}
 						name="password1"
@@ -90,7 +93,7 @@ export default function Register() {
 						containerClass="mb-3"
 					/>
 
-					<CheckInput
+					{/* <CheckInput
 						name="checkbox"
 						type="checkbox"
 						containerClass="mb-2"
@@ -103,7 +106,7 @@ export default function Register() {
 							</>
 						}
 						defaultChecked
-					/>
+					/> */}
 
 					<div className="mb-3 text-center">
 						{loading ?

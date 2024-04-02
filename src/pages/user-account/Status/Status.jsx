@@ -3,9 +3,11 @@ import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CustomDatePicker } from '@/components';
 import { Card } from 'react-bootstrap';
+import useGetUserRole from '@/common/api/useGetUserRole';
 
 // 계정 현황 페이지
 const Status = () => {
+	const userRole = useGetUserRole();
 
 	return (
 		<>

@@ -1,15 +1,94 @@
+
 const MENU_ITEMS = [
-	// {
-	// 	key: 'navigation',
-	// 	label: 'Navigation',
-	// 	isTitle: true,
-	// },
 	{
 		key: 'user-account',
 		label: '계정',
 		isTitle: false,
 		icon: 'ri-account-circle-line',
-		// badge: { variant: 'success', text: '5' },
+		children: [
+			{
+				key: 'ac-status',
+				label: '기본',
+				url: '/user-account/status',
+				parentKey: 'user-account',
+			}
+		],
+	}
+];
+
+const ADMIN_MENU_ITEMS = [
+	{
+		key: 'user-account',
+		label: '계정',
+		isTitle: false,
+		icon: 'ri-account-circle-line',
+		children: [
+			// {
+			// 	key: 'ac-status',
+			// 	label: '관리자 페이지',
+			// 	url: '/user-account/status',
+			// 	parentKey: 'user-account',
+			// },
+			{
+				key: 'ac-status',
+				label: '계정 현황',
+				url: '/user-account/status',
+				parentKey: 'user-account',
+			},
+			{
+				key: 'ac-edit',
+				label: '계정 정보 변경',
+				url: '/user-account/edit',
+				parentKey: 'user-account',
+			},
+			{
+				key: 'ac-usage-period',
+				label: '사용 기간 관리',
+				url: '/user-account/usage-period',
+				parentKey: 'user-account',
+			}
+		],
+	},
+	{
+		key: 'monitoring',
+		label: '모니터링',
+		isTitle: false,
+		icon: 'ri-computer-line',
+		children: [
+			{
+				key: 'mo-keyword-week',
+				label: '키워드 관리 - 주간',
+				url: '/monitoring/keyword-week',
+				parentKey: 'monitoring',
+			},
+			{
+				key: 'mo-keyword-24hour',
+				label: '키워드 관리 - 24시간',
+				url: '/monitoring/keyword-24hour',
+				parentKey: 'monitoring',
+			},
+			{
+				key: 'mo-keyword-month',
+				label: '키워드 관리 - 월간',
+				url: '/monitoring/keyword-month',
+				parentKey: 'monitoring',
+			},
+			{
+				key: 'mo-report',
+				label: '보고서 마법사',
+				url: '/monitoring/report',
+				parentKey: 'monitoring',
+			}
+		],
+	}
+];
+
+const GENERAL_MENU_ITEMS = [
+	{
+		key: 'user-account',
+		label: '계정',
+		isTitle: false,
+		icon: 'ri-account-circle-line',
 		children: [
 			{
 				key: 'ac-status',
@@ -1821,4 +1900,4 @@ const HORIZONTAL_MENU_ITEMS = [
 	},
 ];
 
-export { MENU_ITEMS, HORIZONTAL_MENU_ITEMS };
+export { MENU_ITEMS, ADMIN_MENU_ITEMS, GENERAL_MENU_ITEMS , HORIZONTAL_MENU_ITEMS };

@@ -1,9 +1,5 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { useState } from 'react';
-import { useNotificationContext } from '../context';
-
-const TOKEN = '000';
 
 const mock = new MockAdapter(axios, { onNoMatch: 'passthrough' });
 
@@ -18,7 +14,6 @@ export let users = [
 ];
 
 export default function configureFakeBackend() {
-	
 	mock.onPost('/login/').reply(function (config) {
 		return new Promise(function (resolve, reject) {
 			setTimeout(function () {
@@ -41,7 +36,7 @@ export default function configureFakeBackend() {
 					})
 					.then(response => {
 						if (response.ok) {
-							return response.json(); 
+							data=response.json(); 
 						} else {
 							console.log("로그인실패")
 							throw new Error(response.statusText);

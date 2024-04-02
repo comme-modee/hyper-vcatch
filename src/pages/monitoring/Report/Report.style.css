@@ -1,0 +1,8 @@
+.report-wrapper { width: 100%; max-width: 1000px; margin: 0 auto; }
+.report-process-line { transition: all 0.5s ease-in-out; }
+
+.tilde-sign { display: flex; align-items: center; font-size: 18px; }
+.report-btn-wrapper { display: flex; gap: 3%; }
+
+.report-btn-week,
+.report-btn-24hour { width: 50%; word-break: keep-all; }

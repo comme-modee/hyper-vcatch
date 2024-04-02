@@ -34,7 +34,7 @@ const Logout = () => {
 					<h4 className="text-dark-50 text-center mt-0 fw-bold">
 						{t('See You Again !')}
 					</h4>
-					<p className="text-muted mb-4">{t('You are now successfully sign out.')}</p>
+					<p className="text-muted mb-4">{t('You are now successfully log out.')}</p>
 
 					<div className="logout-icon m-auto">
 						<svg

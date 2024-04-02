@@ -4,7 +4,7 @@ import { Navigate, Route, Routes as ReactRoutes } from 'react-router-dom';
 import VerticalLayout from '@/layouts/Vertical';
 import HorizontalLayout from '@/layouts/Horizontal';
 import Root from './Root';
-import UserAccount from '@/pages/user-account';
+import useGetUserRole from '@/common/api/useGetUserRole';
 
 /**
  * routes import
@@ -14,6 +14,8 @@ const Apps = lazy(() => import('../pages/apps'));
 const OtherPages = lazy(() => import('../pages/otherpages'));
 const UI = lazy(() => import('../pages/ui'));
 const Error404Alt = lazy(() => import('../pages/otherpages/Error404Alt'));
+const UserAccount = lazy(() => import('../pages/user-account'));
+const Monitoring = lazy(() => import('../pages/monitoring'));
 
 export default function ProtectedRoutes() {
 	const { settings } = useThemeContext();
@@ -23,20 +25,33 @@ export default function ProtectedRoutes() {
 			: HorizontalLayout;
 
 	const { user } = useAuthContext();
+	const userRole = useGetUserRole();
 
-	return user ? (
-		<ReactRoutes>
-			<Route path="/*" element={<Layout />}>
-				<Route index element={<Root />} />
-				<Route path="user-account/*" element={<UserAccount />} />
-				<Route path="dashboard/*" element={<Dashboard />} />
-				<Route path="apps/*" element={<Apps />} />
-				<Route path="pages/*" element={<OtherPages />} />
-				<Route path="ui/*" element={<UI />} />
-				<Route path="*" element={<Error404Alt />} />
-			</Route>
-		</ReactRoutes>
-	) : (
-		<Navigate to="/account/login" replace />
-	);
+	if (user) {
+		if (userRole === 'ADMIN') {
+			return (
+				<ReactRoutes>
+					<Route path="/*" element={<Layout />}>
+					<Route index element={<Root />} />
+					<Route path="monitoring/*" element={<Monitoring />} />
+					<Route path="user-account/*" element={<UserAccount />} />
+					<Route path="*" element={<Error404Alt />} />
+					</Route>
+				</ReactRoutes>
+			)
+		} else if (userRole === 'GENERAL') {
+			return (
+				<ReactRoutes>
+					<Route path="/*" element={<Layout />}>
+					<Route index element={<Root />} />
+					<Route path="monitoring/*" element={<Monitoring />} />
+					<Route path="user-account/*" element={<UserAccount />} />
+					<Route path="*" element={<Error404Alt />} />
+					</Route>
+				</ReactRoutes>
+			)
+		}
+	} else {
+		return <Navigate to="/account/login" replace />
+	}
 }

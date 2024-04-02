@@ -1,8 +1,15 @@
-import { HORIZONTAL_MENU_ITEMS, MENU_ITEMS } from '@/common/menu-items';
+import { HORIZONTAL_MENU_ITEMS, MENU_ITEMS, GENERAL_MENU_ITEMS, ADMIN_MENU_ITEMS } from '@/common/menu-items';
 
-const getMenuItems = () => {
+const getMenuItems = (userRole) => {
   // NOTE - You can fetch from server and return here as well
-  return MENU_ITEMS;
+  switch (userRole) {
+    case 'ADMIN':
+      return ADMIN_MENU_ITEMS;
+    case 'GENERAL':
+      return GENERAL_MENU_ITEMS;
+    default:
+      return MENU_ITEMS;
+  }
 };
 
 const getHorizontalMenuItems = () => {

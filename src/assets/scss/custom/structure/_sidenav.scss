@@ -87,6 +87,19 @@ html[data-bs-theme="dark"] {
     transition: $transition-base;
 }
 
+
+
+/****************************************************/
+//모바일에서 padding 없애려고 추가한 코드
+@media screen and (max-width: 540px) {
+    .content-page {
+        padding: 0 0 $footer-height;
+    }
+}
+/****************************************************/
+
+
+
 // Left Side-menu
 .leftside-menu {
     z-index: 1000;

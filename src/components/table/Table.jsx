@@ -10,6 +10,7 @@ import {
 } from 'react-table';
 import classNames from 'classnames';
 import { Pagination } from './Pagination';
+import './Table.style.css';
 
 const GlobalFilter = ({
   preGlobalFilteredRows,
@@ -86,6 +87,7 @@ const Table = (props) => {
   }
 
   const dataTable = useTable(
+    
     {
       columns: props.columns,
       data: props['data'],
@@ -169,10 +171,10 @@ const Table = (props) => {
         />
       )}
 
-      <div className="table-responsive">
+      <div className="table-responsive monitoring-table-wrapper">
         <table
           {...dataTable.getTableProps()}
-          className={classNames('table table-centered react-table', props['tableClass'])}
+          className={classNames('table table-centered react-table monitoring-table', props['tableClass'])}
         >
           <thead className={props['theadClass']}>
             {dataTable.headerGroups.map((headerGroup, index) => (
@@ -186,6 +188,7 @@ const Table = (props) => {
                       sorting_desc: column.isSortedDesc === true,
                       sorting_asc: column.isSortedDesc === false,
                       sortable: column.defaultCanSort === true,
+                      // customHeader: true
                     })}
                     key={index}
                   >
@@ -202,7 +205,7 @@ const Table = (props) => {
                 <tr {...row.getRowProps()} key={index}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      <td {...cell.getCellProps()}><p>{cell.render('Cell')}</p></td>
                     );
                   })}
                 </tr>

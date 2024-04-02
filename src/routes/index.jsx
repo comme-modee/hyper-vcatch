@@ -8,6 +8,7 @@ import ErrorPageNotFound from '@/pages/error/PageNotFound';
 export default function AppRoutes() {
 	return (
 		<ReactRoutes>
+			<Route index element={<Account />} />
 			<Route path="account/*" element={<Account />} />
 			<Route path="/*" element={<ProtectedRoutes />} />
 			<Route path="/error/*" element={<ErrorPages />} />
