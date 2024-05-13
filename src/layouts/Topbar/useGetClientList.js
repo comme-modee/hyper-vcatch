@@ -25,7 +25,7 @@ export default function useGetClientList() {
 			}
 		} catch (error) {
 			console.log("여기")
-			showNotification({ message: error.toString(), type: 'error' });
+			// showNotification({ message: error.toString(), type: 'error' });
 		} finally {
 			setLoading(false);
 		}

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Form, InputGroup } from 'react-bootstrap';
 
@@ -17,6 +17,7 @@ export default function PasswordInput({
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  
   return (
     <>
       <Controller
@@ -40,7 +41,7 @@ export default function PasswordInput({
                 onChange={(e) => {
                   field.onChange(e.target.value);
                 }}
-                className={className}
+                className={fieldState.error&&className}
                 isInvalid={Boolean(fieldState.error?.message)}
               />
               <div

@@ -16,9 +16,9 @@ export default function Account() {
 	return (
 		<Routes>
 			<Route path="/*" element={<DefaultLayout />}>
-				<Route index element={<Login />} />
-				<Route path="test-login" element={<TestLoginPage />} />
-				<Route path="login" element={<Login />} />
+				{/* <Route index element={<Login />} /> */}
+				{/* <Route path="test-login" element={<TestLoginPage />} /> */}
+				{/* <Route path="login" element={<Login />} /> */}
 				<Route path="logout" element={<Logout />} />
 				<Route path="register" element={<Register />} />
 				<Route path="recover-password" element={<RecoverPassword />} />

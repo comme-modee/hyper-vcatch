@@ -12,14 +12,15 @@ export function useUserInfoContext() {
 }
 
 export function UserInfoProvider({ children }) {
-  const [userInfo, setUserInfo] = useState(
+  const [ userInfo, setUserInfo ] = useState(
     localStorage.getItem('userInfo')
     ? localStorage.getItem('userInfo') || '{}'
     : undefined
   );
 
-  const [clientUid, setClientUid] = useState('');
-
+  const [ clientUid, setClientUid ] = useState('');
+  const [ clientName, setClientName ] = useState('');
+  // console.log(clientUid)
   const saveUserInfo = useCallback(
     (userInfo) => {
       setUserInfo(userInfo);
@@ -41,14 +42,23 @@ export function UserInfoProvider({ children }) {
     [setClientUid]
   );
 
+  const saveClientName = useCallback(
+    (clientName) => {
+      setClientName(clientName);
+    },
+    [setClientName]
+  );
+
   return (
     <UserInfoContext.Provider
       value={{
         userInfo,
         clientUid,
+        clientName,
         saveUserInfo,
         removeUserInfo,
-        saveClientUid
+        saveClientUid,
+        saveClientName
       }}
     >
       {children}

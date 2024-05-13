@@ -1,22 +1,13 @@
-import { Link, useLocation } from 'react-router-dom';
-import { notifications, profileMenus, searchOptions } from './data';
-import LanguageDropdown from './LanguageDropdown';
-import NotificationDropdown from './NotificationDropdown';
+import { useLocation } from 'react-router-dom';
+import { profileMenus } from './data';
 import ProfileDropdown from './ProfileDropdown';
-import SearchDropdown from './SearchDropdown';
-import TopbarSearch from './TopbarSearch';
-import AppsDropdown from './AppsDropdown';
 import MaximizeScreen from './MaximizeScreen';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 
 // assets
-import userImage from '@/assets/images/users/avatar-1.jpg';
-import logo from '@/assets/images/logo.png';
-import logoDark from '@/assets/images/logo-dark.png';
-import logoSm from '@/assets/images/logo-sm.png';
-import logoDarkSm from '@/assets/images/logo-dark-sm.png';
+import userImage from '@/assets/images/users/user-image-1.png';
 import { ThemeSettings, useThemeContext, useUserInfoContext } from '@/common';
 import useThemeCustomizer from '@/components/ThemeCustomizer/useThemeCustomizer';
 import { useViewport } from '@/hooks';
@@ -43,14 +34,14 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 	//셀렉트박스에서 클라이언트 선택하면 saveClientUid로 전달
 	const [ client, setClient ] = useState('');
 
-	//clientUid 저장
-	const { saveClientUid } = useUserInfoContext(); 
+	//clientUid, clientName 저장
+	const { clientUid, saveClientName, saveClientUid } = useUserInfoContext(); 
 
 	useEffect(()=>{
 		if(userInfo) {
 			getClientList(userInfo.username)
 		}
-		if(location.pathname === '/monitoring/keyword-week' || location.pathname === '/monitoring/keyword-24hour' || location.pathname === '/monitoring/keyword-month') {
+		if(['/monitoring/keyword-week', '/monitoring/keyword-24hour', '/monitoring/keyword-month', '/monitoring/report'].includes(location.pathname)) {
 			setShowClientSelectBox(true)
 		} else {
 			setShowClientSelectBox(false)
@@ -60,9 +51,19 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 	useEffect(()=>{
 		if(client || client === '') {
 			saveClientUid(client)
-			console.log("22", client)
+			if(client !== '') {
+				const findClient = clientListData.find(cl => cl.client_uid === parseInt(client, 10));
+				saveClientName(findClient.client_name)
+			}
 		}
 	},[client])
+
+	// useEffect(()=>{
+	// 	if(clientListData) {
+	// 		const findClient = clientListData.find(cl => cl.client_uid === client);
+	// 		console.log(findClient)
+	// 	}
+	// },[clientListData])
 
 	
 
@@ -134,7 +135,7 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 	return (
 		<div className={'navbar-custom'}>
 			<div className="topbar container-fluid">
-				<div className="d-flex align-items-center gap-lg-2 gap-1">
+				<div className="d-flex align-items-center gap-lg-2 gap-0">
 					{/* <div className="logo-topbar">
 						<Link to="/" className={topbarDark ? 'logo-light' : 'logo-dark'}>
 							<span className="logo-lg">
@@ -163,18 +164,18 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 
 					{/* 클라이언트 셀렉트 박스 */}
 					{showClientSelectBox ? 
-						<Form.Select id='client-select' defaultValue='' aria-label="Default select example" onChange={(e) => setClient(e.target.value)}>
-							<option value=''>클라이언트 검색</option>
-							{clientListData && clientListData.map((client) => <option key={client.client_uid} value={client.client_uid}>{client.client_name}</option>)}
+						<Form.Select id='client-select' defaultValue={clientUid || ''} aria-label="Default select example" onChange={(e) => setClient(e.target.value)}>
+							<option value=''>클라이언트 선택</option>
+							{clientListData && clientListData.map((client, index) => <option key={`${client.client_uid}${index}`} value={client.client_uid}>{client.client_name}</option>)}
 						</Form.Select>
 					: <></> }
 
 				</div>
 
-				<ul className="topbar-menu d-flex align-items-center gap-3">
-					<li className="dropdown d-lg-none">
+				<ul className="topbar-menu d-flex align-items-center gap-lg-3 gap-2">
+					{/* <li className="dropdown d-lg-none">
 						<SearchDropdown />
-					</li>
+					</li> */}
 
 					{/* 테마 세팅 */}
 					{/* <li className="d-none d-sm-inline-block">
@@ -187,10 +188,10 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 					</li> */}
 
 					{/* 테마 모드 변경 */}
-					<li className="d-none d-sm-inline-block">
+					<li>
 						<OverlayTrigger
 							placement="left"
-							overlay={<Tooltip id="dark-mode-toggler">Theme Mode</Tooltip>}
+							overlay={<Tooltip id="dark-mode-toggler">테마 변경</Tooltip>}
 						>
 							<div className="nav-link" id="light-dark-mode" onClick={toggleDarkMode}>
 								<i className="ri-moon-line font-22" />

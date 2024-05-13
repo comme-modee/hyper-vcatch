@@ -1,56 +1,99 @@
-import { Row, Col, Card, Button, CardBody } from 'react-bootstrap';
-import { Table, CustomDatePicker } from '@/components';
-import { useState } from 'react';
+import { Card, Button } from 'react-bootstrap';
+import { CustomDatePicker, Spinner } from '@/components';
+import { useState, useEffect } from 'react';
 import useMonitoringKeyword from './useMonitoringKeyword';
-import { useEffect } from 'react';
 import MonitoringTable from './MonitoringTable';
 import Form from 'react-bootstrap/Form';
 import { Pagination } from 'react-bootstrap';
 import { useUserInfoContext } from '@/common';
 import usePlatformList from './usePlatformList';
+import './css/MonitoringTable-common.style.css';
+import './css/Switch.css';
 
 const AdvancedTable = ( {type} ) => {
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const [editedSelectedDate, setEditedSelectedDate] = useState(new Date())
-  const [platform, setPlatform] = useState('')
-  const [keyword, setKeyword] = useState('')
+  const [ selectedDate, setSelectedDate ] = useState(new Date())
+  const [ editedSelectedDate, setEditedSelectedDate ] = useState(new Date().toISOString().split('T')[0])
+  const [ platform, setPlatform ] = useState('')
+  const [ keyword, setKeyword ] = useState('')
   const { data:MonitoringData, loading, searchKeyword, showNotification } = useMonitoringKeyword(type);
-  const [sortData, setSortData] = useState([])
-  const [rows, setRows] = useState(100);
-  const [totalPage, setTotalPage] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [ sortData, setSortData ] = useState([])
+  const [ rows, setRows ] = useState(100);
+  const [ totalPage, setTotalPage ] = useState('');
+  const [ currentPage, setCurrentPage ] = useState(1);
   const { clientUid } = useUserInfoContext(); 
   const { data:platformListData, getPlatformList } = usePlatformList();
-  const [selectedMonth, setSelectedMonth] = useState((new Date().getMonth() + 1).toString().padStart(2, '0'));
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [weekBtn, setWeekBtn] = useState(true);
-  const [hourBtn, setHourBtn] = useState(false);
+  const [ selectedMonth, setSelectedMonth ] = useState((new Date().getMonth() + 1).toString().padStart(2, '0'));
+  const [ selectedYear, setSelectedYear ] = useState(new Date().getFullYear());
+  const [ weekBtn, setWeekBtn ] = useState(true);
+  const [ hourBtn, setHourBtn ] = useState(false);
+  const [ today, setToday ] = useState(new Date().toISOString().split('T')[0])
+  const [ isToday, setIsToday ] = useState(true);
   let dataType = '';
 
+  const [ isSwitchOn, setIsSwitchOn ] = useState(false);
+  // const [ isSwitchShow, setIsSwitchShow ] = useState(false);
+
   useEffect(()=>{
-    if(selectedDate || (clientUid || clientUid === '') || platform || (keyword || keyword === '') || rows || currentPage || selectedMonth || selectedYear ) {
+    if(selectedDate) {
       const editedDate = selectedDate.toISOString().split('T')[0];
       setEditedSelectedDate(editedDate)
+    }
+    // console.log("1111111111", selectedDate, editedSelectedDate)
+
+  },[selectedDate])
+
+  useEffect(()=>{
+    if(today === editedSelectedDate) {
+      setIsToday(true)
+    } else {
+      setIsToday(false)
+    }
+    // console.log("오늘인지: ", isToday)
+    // console.log("2222222222", selectedDate, editedSelectedDate)
+    if(editedSelectedDate || (clientUid || clientUid === '') || platform || (keyword || keyword === '') || rows || currentPage || selectedMonth || selectedYear ) {
       // console.log("1 w: ",weekBtn, "h:", hourBtn)
-      console.log('keyword: ', keyword)
+      // console.log('keyword: ', keyword)
 
       if(weekBtn) {
         dataType = "y";
       } else if (hourBtn) {
         dataType = "n";
       }
-      searchKeyword({ editedSelectedDate, clientUid, platform, keyword, rows, currentPage, selectedMonth, selectedYear, dataType })
 
+      searchKeyword({ editedSelectedDate, clientUid, platform, keyword, rows, currentPage, selectedMonth, selectedYear, dataType })
       window.scrollTo({
         top: 0
       });
       
       getPlatformList();
-
     }
-  },[clientUid, platform, keyword, rows, currentPage, selectedMonth, selectedYear, weekBtn, hourBtn, selectedDate, editedSelectedDate])
+
+  },[clientUid, platform, rows, currentPage, selectedMonth, selectedYear, weekBtn, hourBtn, editedSelectedDate, today, isToday])
+
+  useEffect(()=>{
+    if(clientUid !== '') {
+      setIsSwitchOn(true)
+    } else {
+      setIsSwitchOn(false)
+    }
+  },[clientUid])
+
+  const handleKeywordInput = () => {
+    searchKeyword({ editedSelectedDate, clientUid, platform, keyword, rows, currentPage, selectedMonth, selectedYear, dataType })
+  }
 
 
+  
+  // useEffect(()=>{
+  //   // 1초마다 searchKeyword 호출
+  //   const intervalCallAPI= setInterval(() => {
+  //     searchKeyword({ editedSelectedDate, clientUid, platform, keyword, rows, currentPage, selectedMonth, selectedYear, dataType })
+  //     console.log("데이터불러옴")
+  //   }, 5000);
+
+  //   // 컴포넌트가 언마운트될 때 clearInterval을 통해 interval 정리
+  //   return () => clearInterval(intervalCallAPI);
+  // },[])
 
   //받아온 데이터 정리
   useEffect(()=> {
@@ -68,6 +111,7 @@ const AdvancedTable = ( {type} ) => {
               title: item.info_title,
               url: item.info_url,
               h24: item.h24,
+              seq: item.client_collect_seq
           };
 
           if (type === 'week') {
@@ -105,6 +149,9 @@ const AdvancedTable = ( {type} ) => {
               </Pagination.Item>
           );
       }
+      if(totalPage === 0) {
+        items.push( <Pagination.Item key={1} active={1}> 1 </Pagination.Item> );
+      }
       return (
           <div className='mt-3 monitoring-pagination'>
               <Pagination className="pagination-rounded">
@@ -115,6 +162,16 @@ const AdvancedTable = ( {type} ) => {
           </div>
       );
   };
+
+
+
+  // const handleSwitchChange = (e) => {
+  //   if (e.target.checked) {
+  //     setIsSwitchOn(true)
+  //   } else {
+  //     setIsSwitchOn(false)
+  //   }
+  // };
 
   const SelectDate = () => {
     if( type === 'week' || type === '24hour') {
@@ -149,31 +206,21 @@ const AdvancedTable = ( {type} ) => {
       )
     }
   }
-
-  const KeywordInput = () => {
-    if( type === 'week' || type === '24hour') {
-      return (
-        <div>
-          <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value||'')} placeholder='키워드' className='form-control'/>
-        </div>
-      )
-    } 
-  }
   
   return (
     <>
           <Card className={`monitoring-card ${type === 'month' ? 'monitoring-card-month' : ''}`}>
-            <Card.Body>
+            <Card.Body className='d-flex justify-content-between'>
               <div className='search-area'>
 
                   <Form.Select id='platform-select' defaultValue='' aria-label="Default select example" onChange={(e) => setPlatform(e.target.value)}>
-                    <option value=''>플랫폼 검색</option>
+                    <option value=''>플랫폼 선택</option>
                     {platformListData && platformListData.map((platform, index) => <option key={index} value={platform.type}>{platform.name}</option>)}
                   </Form.Select>
 
                   {type === 'week' || type === '24hour' ? 
                   <div>
-                    <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value||'')} placeholder='키워드' className='form-control'/>
+                    <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value||'')} onKeyUp={handleKeywordInput} placeholder='키워드' className='form-control'/>
                   </div> : ''}
 
                   <SelectDate/>
@@ -184,13 +231,29 @@ const AdvancedTable = ( {type} ) => {
                       <Button onClick={() => {setHourBtn(true), setWeekBtn(false)}} variant={`${hourBtn ? 'info' : 'light'}`} className='hour-bth'>24시</Button>
                     </>
                   : ''}
-
               </div>
+              {/* {isSwitchShow ? 
+                <>
+                  <input
+                    className="react-switch-checkbox"
+                    id={`react-switch-new`}
+                    type="checkbox"
+                    onChange={(e) => handleSwitchChange(e)}
+                  />
+                  <label
+                    className="react-switch-label"
+                    htmlFor={`react-switch-new`}
+                  >
+                    <span className={`react-switch-button`}/>
+                  </label>
+                </> : ''
+              } */}
             </Card.Body>
 
             <Card.Body>
 
-              <MonitoringTable type={type} data={sortData}/>
+              { loading ? <div className='spinner-container'><Spinner color='primary' size='md' className='m-auto'/></div> : <MonitoringTable type={type} data={sortData} isToday={isToday} isSwitchOn={isSwitchOn}/> }
+              { totalPage === 0 ? <div className='zero-data-container'>0건의 데이터가 검색되었습니다.</div> : ''}
 
             </Card.Body>
 

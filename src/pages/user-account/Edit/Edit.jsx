@@ -7,21 +7,22 @@ import { Form, PasswordInput, TextInput } from '@/components';
 import { useState } from 'react';
 import Spinner from '../../../components/Spinner';
 import './Edit.style.css';
+import useErrorAni from '@/hooks/useErrorAni';
 
 // 계정 정보 변경
 const Edit = () => {
 	const { t } = useTranslation();
 	const [ loading, setLoading ] = useState(false);
 	const { showNotification } = useNotificationContext();
+	const { errorAni, handleErrorAni } = useErrorAni();
 	const navigate = useNavigate();
 
 	//로그인한 사용자 정보
 	const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
 	const schema = yup.object().shape({
-		password: yup.string().required('Please enter password'),
+		password: yup.string().required('비밀번호를 입력해주세요'),
 	});
-
 	
 	const confirmUserInfo = async (value) => {
 		setLoading(true)
@@ -31,16 +32,15 @@ const Edit = () => {
 		try {
 			const res = await authApi.confirmUserInfo(value);
             if(res) {
-				// navigate('/user-account/edit-user')
+				navigate('/user-account/edit-user')
             } else {
                 showNotification({ message: "비밀번호가 일치하지 않습니다. 다시 확인해주세요.", type: 'error' });
             }
-        } catch {
-
+        } catch(error) {
+			console.log(error)
         } finally {
 			setLoading(false)
 		}
-
 	}
 
 	return (
@@ -95,23 +95,22 @@ const Edit = () => {
 									type="text"
 									name="username"
 									readOnly
-									containerClass="mb-3 mt-3"
+									className='form-control-light'
 								/>
 
 								<PasswordInput
 									label={t('Password')}
 									name="password"
-									placeholder={t('Enter your password')}
-									containerClass="mb-3"
-									errors
+									placeholder={t('비밀번호')}
+									className={`${errorAni}`}
 								/>
 
 								<div className="mb-3 text-center">
 									{loading ?
 									<Spinner color='primary' size='sm' className='m-auto'/>
 									:
-									<Button variant="primary" type="submit">
-									{t('확인')}
+									<Button variant="primary" type="submit" onClick={() => handleErrorAni()}>
+										{t('확인')}
 									</Button>
 									}
 								</div>

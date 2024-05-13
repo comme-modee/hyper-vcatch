@@ -12,9 +12,9 @@ const BottomLink = () => {
 		<Row className="mt-3">
 			<Col className="text-center">
 				<p className="text-muted">
-					{t('Back to ')}
-					<Link to={'/account/login'} className="text-muted ms-1">
-						<b>{t('Log In')}</b>
+					{t('다시')}
+					<Link to={'/'} className="text-muted ms-1">
+						<b>{t('로그인')}</b>
 					</Link>
 				</p>
 			</Col>
@@ -32,9 +32,9 @@ const Logout = () => {
 			<AccountWrapper bottomLinks={<BottomLink />}>
 				<div className="text-center w-75 m-auto">
 					<h4 className="text-dark-50 text-center mt-0 fw-bold">
-						{t('See You Again !')}
+						{t('로그아웃')}
 					</h4>
-					<p className="text-muted mb-4">{t('You are now successfully log out.')}</p>
+					<p className="text-muted mb-4">{t('Vcatch에서 로그아웃 되었습니다.')}</p>
 
 					<div className="logout-icon m-auto">
 						<svg

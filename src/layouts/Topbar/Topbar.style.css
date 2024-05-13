@@ -1,1 +1,5 @@
-#client-select { cursor: pointer; }
+#client-select {
+    /* border: 1px solid rgba(var(--ct-info-rgb), 0.5); */
+    /* background-color: rgba(var(--ct-info-rgb), 0.1); */
+    font-weight: 400;
+}

@@ -1,6 +1,5 @@
 import HttpClient from '../helpers/httpClient';
 
-
 function AuthService() {
   
   return {
@@ -14,7 +13,6 @@ function AuthService() {
             HttpClient.post('/auth/login/', {
               username: values.username,
               password: values.password,
-              
             })
             .then(response => {
               // console.log("1", response)
@@ -115,7 +113,7 @@ function AuthService() {
 
 
     confirmUserInfo: (values) => {
-      // console.log(values, "--- id,pw 확인 중 ---")
+      console.log(values, "--- id,pw 확인 중 ---")
 
       return new Promise(function (resolve, reject) {
         setTimeout(function () {   

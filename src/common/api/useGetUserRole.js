@@ -11,9 +11,7 @@ export default function useGetUserRole() {
         if(token) {
             const decodedToken = jwtDecode(token);
             userRole = decodedToken.roles[0];
-        } else {
-            navigator('/account/login')
-        }
+        } 
 
     return userRole;
 };

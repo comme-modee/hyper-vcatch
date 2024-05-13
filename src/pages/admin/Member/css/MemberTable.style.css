@@ -1,0 +1,110 @@
+.member-table-toast {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 140px;
+    bottom: 20px;
+    right: 20px;
+}
+.member-table-toast > .toast-body { padding: 8px; }
+.member-card > .card-body {
+    display: grid;
+    gap: 30px;
+    grid: 
+        'mem . havenot btns have' 1fr
+        /340px 100px 340px 70px 340px;
+}
+
+.mem-manage-table { width: 340px; padding: 20px; }
+.mem-manage-table > .header { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid var(--ct-border-color); padding-bottom: 20px; }
+.mem-manage-table > .header > p { font-size: 18px; font-weight: 300; margin: 0; }
+
+.mem-manage-table > .body > div > .item { display: flex; width: 100%; gap: 6px; font-size: 16px; padding: 7.4px 10px; border-bottom: 1px solid var(--ct-border-color); border-top: 1px solid var(--ct-tertiary-bg-rgb); border-left: 1px solid var(--ct-tertiary-bg-rgb); border-right: 1px solid var(--ct-tertiary-bg-rgb); cursor: pointer; }
+.mem-manage-table > .body > div > .active { font-weight: 400; background-color: var(--ct-border-color); color: var(--ct-dark-text-emphasis); }
+
+.member-table { grid-area: mem; background-color: rgba(var(--ct-tertiary-bg-rgb), 1); position: relative; }
+.member-table > .body > .mem-spinner-wrapper { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); }
+
+.have-client-table { grid-area: have; background-color: rgba(var(--ct-danger-rgb), 0.07); position: relative; }
+.have-client-table > .header { border-bottom: 1px solid var(--ct-danger-border-subtle); }
+.have-client-table > .body > .have-spinner-wrapper { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); }
+.have-client-table > .body > div > .item { border-bottom: 1px solid var(--ct-danger-border-subtle); }
+.have-client-table > .body > div > .active { font-weight: 400; background-color: rgba(var(--ct-danger-rgb), 0.15); color: var(--ct-danger-text-emphasis); }
+.have-not-client-table { grid-area: havenot; background-color: rgba(var(--ct-info-rgb), 0.07); position: relative; }
+.have-not-client-table > .header { border-bottom: 1px solid var(--ct-info-border-subtle); }
+.have-not-client-table > .body > .have-not-spinner-wrapper { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); }
+.have-not-client-table > .body > div > .item { border-bottom: 1px solid var(--ct-info-border-subtle); }
+.have-not-client-table > .body > div > .active { font-weight: 400; background-color: rgba(var(--ct-info-rgb), 0.15); color: var(--ct-info-text-emphasis); }
+
+.edit-btn-wrapper { grid-area: btns; align-self: center; display: flex; flex-direction: column; gap: 20px; }
+.edit-btn-wrapper > button { display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+.edit-btn-wrapper > button:nth-child(1) { padding: 6px 6px 6px 14px; }
+.edit-btn-wrapper > button:nth-child(2) { padding: 6px 14px 6px 6px; }
+.edit-btn-wrapper > button > i { font-size: 20px; }
+.edit-btn-wrapper-m { display: none; }
+
+.no-user { display: flex; justify-content: center; align-items: center; flex-direction: column; height: 200px; gap: 14px; }
+.no-user > img { width: 40%; }
+
+/* 모바일에서 호버 효과 적용되지않게 */
+/* 호버가 지원되는 환경 and 마우스와 같은 정확한 포인터 장치를 지원하는 환경 */
+@media (hover: hover) and (pointer: fine) { /* when supported */
+    .mem-manage-table > .body > div > .item:hover { font-weight: 400; background-color: var(--ct-border-color); color: var(--ct-dark-text-emphasis); }
+    .have-client-table > .body > div > .item:hover { font-weight: 400; background-color: rgba(var(--ct-danger-rgb), 0.15); color: var(--ct-danger-text-emphasis); }
+    .have-not-client-table > .body > div > .item:hover { font-weight: 400; background-color: rgba(var(--ct-info-rgb), 0.15); color: var(--ct-info-text-emphasis); }
+}
+
+@media screen and (max-width: 1680px) {
+    .member-card > .card-body {
+        gap: 1%;
+        grid: 
+            'mem . havenot btns have' 1fr
+            /26% 3% 30% 7% 30%;
+    }
+    .mem-manage-table { width: auto; }
+}
+
+@media screen and (max-width: 980px) {
+    .member-card > .card-body {
+        gap: 2%;
+        grid: 
+            'mem mem mem' 49%
+            'havenot btns have' 49%
+            /43% 10% 43%;
+    }
+    .mem-manage-table { height: initial; }
+    .member-table > .body,
+    .have-not-client-table > .body,
+    .have-client-table > .body { height: 290px; overflow-y: auto; }
+
+    .edit-btn-wrapper > button:nth-child(1) { padding: 4px 6px 4px 14px; }
+    .edit-btn-wrapper > button:nth-child(2) { padding: 4px 14px 4px 6px; }
+}
+
+
+@media screen and (max-width: 768px) {
+    .mem-manage-table .item > span,
+    .mem-manage-table .item > i { font-size: 14px; }
+}
+
+@media screen and (max-width: 640px) {
+    .member-card { height: 1100px; }
+    .member-card > .card-body {
+        grid: 
+            'mem' 30%
+            'havenot' 30%
+            'btns' 4%
+            'have' 30%
+            /100%;
+    }
+    .mem-manage-table { padding: 14px; }
+    .mem-manage-table > .header { padding-bottom: 12px; }
+    .member-table > .body,
+    .have-not-client-table > .body,
+    .have-client-table > .body { height: 240px; }
+
+    .edit-btn-wrapper { display: none; }
+    .edit-btn-wrapper-m { display: flex; flex-direction: row; justify-content: center; gap: 10px; }
+    .edit-btn-wrapper-m > button { width: 50%; }
+}

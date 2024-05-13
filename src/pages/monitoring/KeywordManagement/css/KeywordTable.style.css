@@ -1,0 +1,89 @@
+.spinner-container { width: 100%; height: 300px; display: flex; justify-content: center; align-items: center; }
+.zero-data-container { width: 100%; height: 180px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid var(--ct-border-color); }
+
+.client-search-btn { padding: 4px 10px; }
+
+.keyword-card > .card-body > .search-area { display: flex; justify-content: space-between;}
+.keyword-card > .card-body > .search-area > div { display: flex; gap: 0.75rem; }
+.keyword-card select,
+.keyword-card input { width: 200px; }
+.keyword-card > .card-body > .search-area > button { white-space: nowrap; }
+
+.keyword-table { width: 100%; max-width: 1540px; text-align: center; font-size: 16px; }
+.keyword-table p { margin: 0; }
+.keyword-table i { font-size: 20px; cursor: pointer; padding: 0 4px; }
+
+.keyword-table > .header { font-weight: 300; display: flex; border-bottom: 1px solid var(--ct-border-color); background-color: var(--ct-menu-bg); color: #fff; }
+.keyword-table > .body > .content { display: flex; border-bottom: 1px solid var(--ct-border-color); }
+.keyword-table > .header > div,
+.keyword-table > .body > .content > div { padding: 10px 0; display: flex; justify-content: center; align-items: center; }
+.keyword-table > .body > .content > .title,
+.keyword-table > .body > .content > .url { padding: 10px; }
+.keyword-table > .body > .content > .client { padding: 10px; background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
+.keyword-table > .body > .content > .keyword { background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
+.keyword-table > .body > .content > .memo { padding: 10px; background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
+
+.keyword-table .num { width: 5%; }
+.keyword-table .client { width: 20%; }
+.keyword-table .platform { width: 10%; }
+.keyword-table .keyword { width: 15%; }
+.keyword-table .goal { width: 10%; }
+.keyword-table .current { width: 10%; }
+.keyword-table .title { width: 10%; }
+.keyword-table .url { width: 10%; }
+.keyword-table .edit { width: 5%; }
+.keyword-table .del { width: 5%; }
+
+.keyword-table > .body > .content > .client > p,
+.keyword-table > .body > .content > .title > p,
+.keyword-table > .body > .content > .url > p {
+    display: -webkit-box;
+    margin: 0 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.blog-pagination { display: flex; justify-content: center; }
+
+
+@media screen and (max-width: 1240px) {
+    .keyword-card > .card-body { padding: 14px; }
+    .keyword-card > .card-body > .search-area { gap: 6px; }
+    .keyword-table { font-size: 14px; border-bottom: 1px solid var(--ct-border-color); }
+    .keyword-table button { padding: 5px 10px; }
+}
+
+@media screen and (max-width: 980px) {
+    .keyword-card > .card-body > .search-area { flex-direction: column-reverse; gap: 6px; }
+    .keyword-card > .card-body > .search-area > div { display: flex; justify-content: space-between; gap: 10px; }
+    .keyword-card > .card-body > .search-area > div > * { width: calc(100%/3) }
+}
+@media screen and (max-width: 768px) {
+    .keyword-card { padding: 8px; gap: 14px; }
+    .keyword-card > .card-body { padding: 0; }
+
+    .keyword-table .client { width: 32%; }
+    .keyword-table .platform { width: 20%; }
+    .keyword-table .keyword { width: 32%; }
+    .keyword-table .edit { width: 8%; }
+    .keyword-table .del { width: 8%; }
+    .keyword-table i { font-size: 16px; }
+
+    .keyword-table > .header > .num,
+    .keyword-table > .header > .goal,
+    .keyword-table > .header > .current,
+    .keyword-table > .header > .title,
+    .keyword-table > .header > .url,
+    .keyword-table > .body > .content > .num,
+    .keyword-table > .body > .content > .goal,
+    .keyword-table > .body > .content > .current,
+    .keyword-table > .body > .content > .title,
+    .keyword-table > .body > .content > .url { display: none; }
+}
+
+@media screen and (max-width: 480px) {
+    .keyword-card > .card-body > .search-area > div { gap: 4px; }
+}

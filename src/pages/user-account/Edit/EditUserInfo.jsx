@@ -20,12 +20,12 @@ const EditUserInfo = () => {
 		email: yup
       .string()
       .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/i, 'email형식에 맞지 않습니다.')
-      .required(t('Please enter email')),
+      .required(t('email을 입력해주세요')),
     phone: yup
 			.string()
-			.required(t('Please enter phone number'))
+			.required(t('휴대폰번호를 입력해주세요'))
 			.matches(/^01\d{8,9}$/, '01012345678의 형태로 입력해주세요'),
-		password: yup.string().required(t('Please enter password')),
+		password: yup.string().required(t('비밀번호를 입력해주세요')),
 	});
 
 
@@ -39,7 +39,8 @@ const EditUserInfo = () => {
         showNotification({ message: '계정 정보 변경이 완료되었습니다.', type: 'success' });
       }
     } catch(error) {
-      showNotification({ message: error.toString(), type: 'error' });
+      showNotification({ message: '계정 정보 변경에 실패하였습니다. 다시 한번 시도해주세요.', type: 'error' });
+      console.log(error)
     } finally {
       setLoading(false);
     }
@@ -75,30 +76,27 @@ const EditUserInfo = () => {
                   type="text"
                   name="username"
                   readOnly
-                  containerClass="mb-3 mt-3"
+                  className='form-control-light'
                 />
 
                 <TextInput
                   label={t('Phone Number')}
                   type="number"
                   name="phone"
-                  placeholder={t('Enter your phone number')}
-                  containerClass="mb-3"
+                  placeholder={t('휴대폰번호')}
                 />
 
                 <TextInput
                   label={t('Email Address')}
                   type="text"
                   name="email"
-                  placeholder={t('Enter your email')}
-                  containerClass="mb-3"
+                  placeholder={t('이메일 주소')}
                 />
 
                 <PasswordInput
                   label={t('Password')}
                   name="password"
-                  placeholder={t('Enter your password')}
-                  containerClass="mb-3"
+                  placeholder={t('비밀번호 입력')}
                 />
 
                 <div className="mb-3 text-center">

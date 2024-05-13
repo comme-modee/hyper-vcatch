@@ -3,8 +3,9 @@
 //
 
 .navbar-custom {
-    background: $topbar-bg;
-    box-shadow: var(--#{$prefix}box-shadow);
+    // background: $topbar-bg;
+    background: $menu-bg;
+    // box-shadow: var(--#{$prefix}box-shadow);
     min-height: $topbar-height;
     margin-left: $leftbar-width;
     position: sticky;
@@ -78,6 +79,9 @@
             max-height: $topbar-height;
 
             .nav-link {
+                background: $menu-bg;
+                border: none;
+
                 &.show {
                     color: $topbar-item-hover-color;
                 }
@@ -87,7 +91,8 @@
         .nav-link {
             padding: 0;
             position: relative;
-            color: $topbar-item-color;
+            // color: $topbar-item-color;
+            color: $menu-item-color;
             display: flex;
             align-items: center;
             height: $topbar-height;
@@ -148,7 +153,8 @@ html[data-bs-theme="dark"] {
 //  Topbar Menu Toggle button
 .button-toggle-menu {
     border: none;
-    color: $topbar-item-color;
+    // color: $topbar-item-color;
+    color: $menu-item-color;
     width: 60px;
     background-color: transparent;
     font-size: 24px;

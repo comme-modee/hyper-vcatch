@@ -34,7 +34,7 @@ export default function TextInput({
               field.onChange(e.target.value);
             }}
             placeholder={placeholder}
-            className={className}
+            className={fieldState.error&&className}
             isInvalid={Boolean(fieldState.error?.message)}
           />
           {helpText && (

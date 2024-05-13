@@ -1,9 +1,4 @@
-/* * { box-sizing: border-box; } */
-.monitoring-card > .card-body > .search-area { display: flex; gap: 0.75rem; }
-.monitoring-card select { width: 200px; }
-.monitoring-card-month > .card-body > .search-area > button { white-space: nowrap;}
-
-.monitoring-table-week { width: 100%; max-width: 1540px; text-align: center; font-size: 16px; }
+.monitoring-table-week { width: 100%; max-width: 1580px; text-align: center; font-size: 16px; }
 .monitoring-table-week p { margin: 0; }
 .monitoring-table-week i { font-size: 20px; cursor: pointer; padding: 0 4px; }
 
@@ -13,20 +8,25 @@
 .monitoring-table-week .time { width: 60px; }
 .monitoring-table-week .total { width: 100px; }
 .monitoring-table-week .goalrank { width: 100px; }
-.monitoring-table-week .title { width: 200px; }
-.monitoring-table-week .url { width: 130px; }
+.monitoring-table-week .title { width: 180px; }
+.monitoring-table-week .url { width: 150px; }
+.monitoring-table-week .drag-icon { width: 40px; }
 
 .monitoring-table-week > .header { font-weight: 300; display: flex; border-bottom: 1px solid var(--ct-border-color); background-color: var(--ct-menu-bg);; color: #fff; }
+.monitoring-table-week > .header > .active { background-color: rgba(var(--ct-secondary-rgb)); }
 .monitoring-table-week > .body > .content { display: flex; border-bottom: 1px solid var(--ct-border-color); }
 .monitoring-table-week > .header > div,
-.monitoring-table-week > .body > .content > div { padding: 10px 0; display: flex; justify-content: center; align-items: center; }
-.monitoring-table-week > .body > .content > .day,
+.monitoring-table-week > .body > .content > div { padding: 10px 0; display: flex; justify-content: center; align-items: center; gap: 5%; }
 .monitoring-table-week > .body > .content > .time { background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
-.monitoring-table-week > .body > .content > .day > .mo,
+.monitoring-table-week > .body > .content > .time,
+.monitoring-table-week > .body > .content > .total,
+.monitoring-table-week > .body > .content > .goalrank { font-weight: 300; }
 .monitoring-table-week > .body > .content > .time > .mo,
 .monitoring-table-week > .body > .content > .total > .mo,
 .monitoring-table-week > .body > .content > .goalrank > .mo { display: none; }
 .monitoring-table-week > .body > .content > .client > p, 
+.monitoring-table-week > .body > .content > .platform > p, 
+.monitoring-table-week > .body > .content > .keyword > p, 
 .monitoring-table-week > .body > .content > .title > p {
     margin: 0 auto;
     overflow: hidden;
@@ -36,14 +36,16 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
+.monitoring-table-week > .body > .content > .drag-icon { position: relative; }
+.monitoring-table-week > .body > .content > .drag-icon > img { height: 20px; object-fit: contain; position: absolute; top: 50%; transform: translateY(-50%);}
 
 .monitoring-pagination { display: flex; justify-content: center; }
-.monitoring-table-week > .body > .content > .active { background-color: pink; }
+.monitoring-table-week > .body > .content > .active { background-color: var(--ct-danger-bg-subtle); border-left: 1px solid var(--ct-danger-border-subtle); border-right: 1px solid var(--ct-danger-border-subtle); }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1280px) {
     .monitoring-card > .card-body { padding: 14px; }
     .monitoring-card > .card-body > .search-area { gap: 6px; }
-    .monitoring-table-week { font-size: 14px; }
+    .monitoring-table-week { font-size: 14px; border-bottom: 1px solid var(--ct-border-color); }
     .monitoring-table-week > .header { display: grid; grid-template-columns: 37.5% 25% 37.5%; border-bottom: initial; }
     .monitoring-table-week > .header > div { width: initial; }
     .monitoring-table-week > .body > .content > div { width: initial; }
@@ -51,9 +53,10 @@
     .monitoring-table-week > .header > .total,
     .monitoring-table-week > .header > .goalrank,
     .monitoring-table-week > .header > .title,
-    .monitoring-table-week > .header > .url,
-    .monitoring-table-week > .header > .day { display: none; }
-    .monitoring-table-week > .body > .content > .day > .mo,
+    .monitoring-table-week > .header > .url, 
+    .monitoring-table-week > .header > .drag-icon { display: none; }
+    .monitoring-table-week > .body > .content > div { gap: initial; }
+    .monitoring-table-week > .body > .content > .drag-icon { display: none; }
     .monitoring-table-week > .body > .content > .time > .mo,
     .monitoring-table-week > .body > .content > .total > .mo,
     .monitoring-table-week > .body > .content > .goalrank > .mo { display: block; }
@@ -65,7 +68,7 @@
         display: grid;
         grid: 
             "client client client platform platform keyword keyword keyword" 20%
-            "title title title title title title title url" 20%
+            "title title title title title title url url" 20%
             "total total total total goalrank goalrank goalrank goalrank" 20%
             "time1 time2 time3 time4 time5 time6 time7 time8" 40%
              /12.5%   12.5%   12.5%   12.5%   12.5%   12.5%   12.5%   12.5%
@@ -85,30 +88,44 @@
     .monitoring-table-week > .body > .content > .goalrank { grid-area: goalrank; }
     .monitoring-table-week > .body > .content > .title { grid-area: title; padding: 10px 40px; }
     .monitoring-table-week > .body > .content > .url { grid-area: url; display: flex; align-items: center; justify-content: space-evenly; }
-    .monitoring-table-week > .body > .content > .day,
     .monitoring-table-week > .body > .content > .time,
     .monitoring-table-week > .body > .content > .total,
     .monitoring-table-week > .body > .content > .goalrank { padding: 0; background-color: initial; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .monitoring-table-week > .body > .content > .total,
     .monitoring-table-week > .body > .content > .goalrank { flex-direction: row; }
-    .monitoring-table-week > .body > .content > .day > .mo,
     .monitoring-table-week > .body > .content > .time > .mo,
     .monitoring-table-week > .body > .content > .total > .mo,
     .monitoring-table-week > .body > .content > .goalrank > .mo,
-    .monitoring-table-week > .body > .content > .day > p,
     .monitoring-table-week > .body > .content > .time > p,
     .monitoring-table-week > .body > .content > .total > p,
     .monitoring-table-week > .body > .content > .goalrank > p { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-    .monitoring-table-week > .body > .content > .day > .mo,
     .monitoring-table-week > .body > .content > .time > .mo { background-color: rgba(var(--ct-tertiary-bg-rgb), 1); }
+
+    .monitoring-table-week > .body > .content > .active > .mo { background-color: var(--ct-danger-bg-subtle); border-bottom: 1px solid var(--ct-danger-border-subtle); }
+    .monitoring-table-week > .body > .content > .active > p { background-color: var(--ct-danger-bg-subtle); }
+
     .monitoring-table-week > .body > .content > .total > p,
-    .monitoring-table-week > .body > .content > .goalrank > p { border: 1px solid var(--ct-danger-border-subtle); }
+    .monitoring-table-week > .body > .content > .goalrank > p { border: 1px solid var(--ct-info-border-subtle); border-right: none; }
+    .monitoring-table-week > .body > .content > .goalrank > p:nth-child(2) { border-right: 1px solid var(--ct-info-border-subtle); }
     .monitoring-table-week > .body > .content > .total > .mo,
-    .monitoring-table-week > .body > .content > .goalrank > .mo { background-color: var(--ct-danger-bg-subtle); color: var(--ct-danger-text-emphasis); }
+    .monitoring-table-week > .body > .content > .goalrank > .mo { background-color: var(--ct-info-bg-subtle); color: var(--ct-info-text-emphasis); }
 }
 
 @media screen and (max-width: 480px) {
     .monitoring-card { padding: 8px; gap: 14px; }
     .monitoring-card > .card-body { padding: 0; }
     .monitoring-card > .card-body > .search-area { flex-direction: column; gap: 6px; }
+
+    .monitoring-table-week > .body > .content {
+        grid: 
+            "client client client platform platform keyword keyword keyword" 20%
+            "title title title title title title url url" 20%
+            "total total total total goalrank goalrank goalrank goalrank" 20%
+            "time1 time2 time3 time4 time5 time6 time7 time8" 40%
+             /12.5%   12.5%   12.5%   12.5%   12.5%   12.5%   12.5%   12.5%
+    }
+
+    .monitoring-table-week > .body > .content > .time > .mo { font-size: 12px; }
+    .monitoring-table-week i { font-size: 18px; }
+    .monitoring-table-week > .body > .content > .title { padding: 10px; }
 }

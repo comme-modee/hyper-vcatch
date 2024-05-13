@@ -2,6 +2,19 @@
 // error.scss
 //
 
+.is-invalid { outline: 2px solid rgba(var(--ct-danger-rgb), 0.15) !important; }
+.error { border: 1px solid rgb(var(--ct-danger-rgb)); outline: 2px solid rgba(var(--ct-danger-rgb), 0.15); }
+.error-ani { animation: vibration 0.1s 5; }
+
+@keyframes vibration {
+    from {
+      transform: translateX(1px);
+    }
+    to {
+      transform: translateX(-1px);
+    }
+}
+
 .text-error {
     color: var(--#{$prefix}primary);
     text-shadow: rgba(var(--#{$prefix}primary-rgb), 0.3) 5px 1px, rgba(var(--#{$prefix}primary-rgb), 0.2) 10px 3px;

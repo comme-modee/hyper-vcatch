@@ -11,7 +11,7 @@ import './assets/scss/Saas.scss';
 // For Creative demo import Creative.scss
 // import './assets/scss/Creative.scss';
 
-configureFakeBackend();
+// configureFakeBackend();
 
 const App = () => {
 	return (

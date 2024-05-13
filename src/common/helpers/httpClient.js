@@ -9,31 +9,32 @@ const ErrorCodeMessages= {
 function HttpClient() {
 	
 	const _errorHandler = (error) =>
-		Promise.reject(
-			Object.keys(ErrorCodeMessages).includes(error?.response?.status)
-				? ErrorCodeMessages[error.response.status]
-				: error.response.data && error.response.data.message
-				? error.response.data.message
-				: error.message || error
+	Promise.reject(
+		Object.keys(ErrorCodeMessages).includes(error?.response?.status)
+		? ErrorCodeMessages[error.response.status]
+		: error.response.data && error.response.data.message
+		? error.response.data.message
+		: error.message || error
 		);
+		
+		const _httpClient = axios.create({
+			// baseURL: process.env.VITE_API_URL,
+			baseURL: 'http://211.252.30.69:8080/api',
+			timeout: 6000,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		});
 
-	const token = localStorage.getItem('_HYPER_AUTH');
-	   
-	const _httpClient = axios.create({
-		// baseURL: process.env.VITE_API_URL,
-		baseURL: 'http://211.252.30.69:8080/api',
-		timeout: 6000,
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${token}`
-		},
-	});
+		_httpClient.interceptors.request.use((config) => {
+			let token = localStorage.getItem('_HYPER_AUTH');
+			config.headers.Authorization = `Bearer ${token}`
+			return config;
+		});
 	
-	// console.log(_httpClient.defaults.headers)
-	
-	_httpClient.interceptors.response.use((response) => {
-		return response.data;
-	}, _errorHandler);
+		_httpClient.interceptors.response.use((response) => {
+			return response.data;
+		}, _errorHandler);
 
 	return {
 		get: (url, config = {}) => _httpClient.get(url, config),

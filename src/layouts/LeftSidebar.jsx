@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 import AppMenu from './Menu';
 
@@ -32,18 +32,19 @@ const UserBox = () => {
 
 const SideBarContent = () => {
 	const userRole = useGetUserRole();
-
+	
 	return (
 		<>
 			<UserBox />
-			<AppMenu menuItems={getMenuItems(userRole)} />
-			<div className="clearfix" />
+			<AppMenu menuItems={getMenuItems(userRole)}/>
+			{/* <div className="clearfix" /> */}
 		</>
 	);
 };
 
 const LeftSidebar = ({ isCondensed, leftbarDark }) => {
 	const menuNodeRef = useRef(null);
+	const location = useLocation();
 
 	/**
 	 * Handle the click anywhere in doc
@@ -58,12 +59,25 @@ const LeftSidebar = ({ isCondensed, leftbarDark }) => {
 	};
 
 	useEffect(() => {
+		
 		document.addEventListener('mousedown', handleOtherClick, false);
 
 		return () => {
 			document.removeEventListener('mousedown', handleOtherClick, false);
 		};
 	}, []);
+
+	//페이지 이동시 사이드바 닫기 & 백드롭 삭제
+	useEffect(() => {
+		if (document.body) {
+			document.documentElement.classList.remove('sidebar-enable');
+		}
+		const backdrop = document.getElementById('custom-backdrop');
+		if (backdrop) {
+			document.body.removeChild(backdrop);
+			document.body.style.removeProperty('overflow');
+		}
+	}, [location]);
 
 	return (
 		<div className="leftside-menu" ref={menuNodeRef}>

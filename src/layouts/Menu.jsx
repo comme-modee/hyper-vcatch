@@ -90,6 +90,7 @@ const MenuItemWithChildren = ({
 };
 
 const MenuItem = ({ item, className, linkClassName }) => {
+
   return (
     <li className={className}>
       <MenuItemLink item={item} className={linkClassName} />

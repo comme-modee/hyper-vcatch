@@ -26,7 +26,7 @@ export default function IdInput({
       render={({ field, fieldState }) => (
         <Form.Group className={containerClass ?? ''}>
           {label && <Form.Label>{label}</Form.Label>}
-          <InputGroup className="mb-3">
+          <InputGroup>
             <Form.Control
               id={id}
               type={type}
@@ -37,7 +37,7 @@ export default function IdInput({
                 field.onChange(e.target.value);
               }}
               placeholder={placeholder}
-              className={className}
+              className={fieldState.error&&className}
               isInvalid={Boolean(fieldState.error?.message)}
             />
             <Button variant="primary" id="button-addon2" onClick={() => idDuplicationCheck(field.value)}>

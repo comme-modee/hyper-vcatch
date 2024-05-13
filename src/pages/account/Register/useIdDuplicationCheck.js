@@ -4,7 +4,7 @@ export default function useIdDuplicationCheck() {
     const { showNotification } = useNotificationContext();
 
     const idDuplicationCheck = async ( username ) => {
-		console.log(username, "아이디 중복 체크")
+		// console.log(username, "아이디 중복 체크")
         try {
             const res = await authApi.idDuplicationCheck(username);
             if(res) {

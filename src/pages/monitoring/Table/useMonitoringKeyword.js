@@ -34,8 +34,8 @@ export default function useMonitoringKeyword(type) {
 					console.log("데이터없음")
 				}
 			} catch (error) {
-				console.log("여기")
-				showNotification({ message: error.toString(), type: 'error' });
+				console.log(error)
+				// showNotification({ message: '데이터를 불러오지 못했습니다. 새로고침해주세요.', type: 'error' });
 			} finally {
 				setLoading(false);
 			}
@@ -58,14 +58,14 @@ export default function useMonitoringKeyword(type) {
 					console.log("데이터없음")
 				}
 			} catch (error) {
-				console.log("여기")
-				showNotification({ message: error.toString(), type: 'error' });
+				console.log(error)
+				// showNotification({ message: error.toString(), type: 'error' });
 			} finally {
 				setLoading(false);
 			}
 		} else if ( type === 'month' ) {
 			try {
-				console.log("2", values)
+				// console.log("2", values)
 				let data = await monitoring.keywordMonth({
 					client: clientUid,
 					keyword: keyword,
@@ -85,8 +85,8 @@ export default function useMonitoringKeyword(type) {
 					console.log("데이터없음")
 				}
 			} catch (error) {
-				console.log("여기")
-				showNotification({ message: error.toString(), type: 'error' });
+				console.log(error)
+				// showNotification({ message: error.toString(), type: 'error' });
 			} finally {
 				setLoading(false);
 			}

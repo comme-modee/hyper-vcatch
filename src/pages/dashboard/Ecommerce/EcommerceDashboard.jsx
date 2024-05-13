@@ -18,7 +18,7 @@ const EcommerceDashboard = () => {
 			<Row>
 				<Col xs={12}>
 					<div className="page-title-box">
-						<div className="page-title-right">
+						{/* <div className="page-title-right">
 							<form className="d-flex">
 								<div className="input-group">
 									<CustomDatePicker
@@ -36,13 +36,13 @@ const EcommerceDashboard = () => {
 									<i className="mdi mdi-filter-variant"></i>
 								</Link>
 							</form>
-						</div>
-						<h4 className="page-title">Dashboard</h4>
+						</div> */}
+						<h4 className="page-title">대시보드</h4>
 					</div>
 				</Col>
 			</Row>
 
-			<Row>
+			{/* <Row>
 				<Col xl={5} lg={6}>
 					<Statistics />
 				</Col>
@@ -71,7 +71,7 @@ const EcommerceDashboard = () => {
 				<Col xl={3} lg={{ span: 6, order: 1 }}>
 					<Activity />
 				</Col>
-			</Row>
+			</Row> */}
 		</>
 	);
 };

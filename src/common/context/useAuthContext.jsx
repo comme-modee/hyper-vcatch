@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback } from 'react';
+import httpClient from '../helpers/httpClient';
 
 const AuthContext = createContext({});
 
@@ -22,7 +23,6 @@ export function AuthProvider({ children }) {
     const saveSession = useCallback(
       (user) => {
         localStorage.setItem(authSessionKey, user.token);
-        console.log(user.token)
         setUser(user);
       },
       [setUser]

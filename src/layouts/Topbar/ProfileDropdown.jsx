@@ -15,6 +15,7 @@ const ProfileDropdown = ({ userTitle, username, menuItems, userImage }) => {
 				onClick={toggleDropdown}
 				className="nav-link dropdown-toggle arrow-none nav-user px-2"
 			>
+				
 				<span className="account-user-avatar">
 					<img src={userImage} className="rounded-circle" width={32} alt="user" />
 				</span>

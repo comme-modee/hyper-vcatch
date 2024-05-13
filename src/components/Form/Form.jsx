@@ -14,11 +14,23 @@ const Form = ({
     defaultValues,
     mode: 'onChange',
   });
+  
+  // useForm 훅의 반환값에서 formState를 가져옴
+  const { formState: { errors } } = methods;
 
   return (
     <FormProvider {...methods}>
       <BSForm onSubmit={methods.handleSubmit(onSubmit)} {...props}>
-        {children}
+        {children.map((child, index) => {
+          const fieldName = child.props.name;
+          const errorMessage = errors[fieldName]?.message;
+          return (
+            <div className='mb-3' key={`${child}${index}`}>
+              {child}
+              {errors[fieldName] && <small className='text-danger ms-2'>{errorMessage}</small>}
+            </div>
+          )
+        })}
       </BSForm>
     </FormProvider >
   );

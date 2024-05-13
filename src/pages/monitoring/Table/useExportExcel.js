@@ -53,8 +53,8 @@ export default function useExportExcel() {
                 console.log("데이터없음")
             }
         } catch (error) {
-            console.log("여기")
-            showNotification({ message: error.toString(), type: 'error' });
+            console.log(error)
+            // showNotification({ message: error.toString(), type: 'error' });
         } finally {
             setWeekReportLoading(false);
             sethourReportLoading(false);
@@ -174,7 +174,14 @@ export default function useExportExcel() {
             //타이틀 세팅
             title = clientName + ` ${parseInt(startDateOfSubtitle.split('-')[1])}월` + ' 모니터링 보고';
         } else if(reportType === '월간') {
-            for(let i = 1; i<=31; i++) { days.push(i) }
+            if(month === '02') {
+                for(let i = 1; i<=29; i++) { days.push(i) }
+            } else if(['04', '06', '09', '11'].includes(month)) {
+                for(let i = 1; i<=30; i++) { days.push(i) }
+            } else {
+                for(let i = 1; i<=31; i++) { days.push(i) }
+            }
+            console.log(month, days)
             keysOfDailyData = days;
             subTitle = `${year}년 ${parseInt(month, 10)}월`;
             title = clientName + ` ${parseInt(month, 10)}월` + ' 모니터링 보고';
@@ -198,7 +205,7 @@ export default function useExportExcel() {
                     { v: "No", t: "s", s: blueHeaderStyle },
                     { v: "구분", t: "s", s: blueHeaderStyle },
                     { v: "키워드", t: "s", s: blueHeaderStyle },
-                    ...keysOfDailyData.map(key => ({ v: reportType === '월간' ? key + '일': key.split("-")[2] + '일', t: "s", s: pinkHeaderStyle })),
+                    ...keysOfDailyData.map(key => ({ v: reportType === '월간' ? key + '일': parseInt(key.split("-")[2], 10) + '일', t: "s", s: pinkHeaderStyle })),
                     ...(reportType !== '월간' ? [{ v: "주간 노출률", t: "s", s: yellowHeaderStyle }] : []),
                     { v: "컨텐츠URL", t: "s", s: yellowHeaderStyle },
                     { v: "비고", t: "s", s: grayHeaderStyle }
@@ -325,7 +332,7 @@ export default function useExportExcel() {
 
                 //worksheet 이름 & 서브타이틀
                 const [year, month, day] = key.split('-');
-                const editedKey = `${parseInt(month, 10)}월 ${day}일`;
+                const editedKey = `${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
 
                 // 헤더 서브타이틀 행 추가
                 const headerSubtitleRow = [];
@@ -363,7 +370,7 @@ export default function useExportExcel() {
                 });
 
                 // worksheet에 행의 높이와 열의 너비 설정
-                const columnWidths = [ 30, 30, 100, 150, ...header_daily_hours.map(() => 50), 60, 100, 100 ];
+                const columnWidths = [ 30, 30, 100, 150, ...header_daily_hours.map(() => 40), 50, 100, 100 ];
                 ws['!cols'] = columnWidths.map(width => ({ wpx: width }));
                 
                 const rowsArray = Array.from({ length: dailyData.length + 4 }, () => ({ hpx: 22 }));
@@ -393,7 +400,7 @@ export default function useExportExcel() {
         });
         
         // STEP 6: Excel 파일로 저장
-        XLSX.writeFile(wb, "MyExcel.xlsx");
+        XLSX.writeFile(wb, `${title}.xlsx`);
     
     }
 

@@ -1,10 +1,14 @@
 import { PageBreadcrumb, Form, PasswordInput, TextInput } from '@/components';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AccountWrapper from '../AccountWrapper';
 import useLogin, { loginFormSchema } from './useLogin';
 import Spinner from '../../../components/Spinner';
+import useGetUserRole from '@/common/api/useGetUserRole';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import useErrorAni from '@/hooks/useErrorAni';
 
 const BottomLink = () => {
   const { t } = useTranslation();
@@ -13,9 +17,9 @@ const BottomLink = () => {
     <Row className="mt-3">
       <Col className="text-center">
         <p className="text-muted">
-          {t("Don't have an account?")}
+          {t("계정이 없으신가요?")}
           <Link to="/account/register" className="text-muted ms-1">
-            <b>{t('Sign Up')}</b>
+            <b>{t('회원가입')}</b>
           </Link>
         </p>
       </Col>
@@ -25,18 +29,34 @@ const BottomLink = () => {
 
 export default function Login() {
   const { t } = useTranslation();
+  const userRole = useGetUserRole();
+  const navigate = useNavigate();
+  const { loading, login, isAuthenticated } = useLogin();
 
-  const { loading, login, redirectUrl, isAuthenticated } = useLogin();
+  useEffect(()=>{
+    console.log("=====", "userRole:", userRole, "인증여부:", isAuthenticated)
+    if(isAuthenticated) {
+      if(userRole === 'ADMIN') {
+        navigate('/monitoring/keyword-week')
+      } else if(userRole === 'EMPL') {
+        navigate('/monitoring/keyword-week')
+      } else if(userRole === 'CLIENT') {
+        navigate('/monitoring/keyword-week')
+      }
+    }
+  },[userRole, isAuthenticated])
+
+  const { errorAni, handleErrorAni } = useErrorAni();
 
   return (
     <>
-      {isAuthenticated && <Navigate to={redirectUrl} replace />}
+      {/* {isAuthenticated && <Navigate to={redirectUrl} replace />} */}
       
       <PageBreadcrumb title="Login" />
       <AccountWrapper bottomLinks={<BottomLink />}>
 
         <div className="text-center w-75 m-auto">
-          <h4 className="text-dark-50 text-center mt-0 fw-bold">{t('Log In')}</h4>
+          <h4 className="text-dark-50 text-center mt-0 fw-bold">{t('로그인')}</h4>
         </div>
 
         <Form
@@ -44,34 +64,30 @@ export default function Login() {
           schema={loginFormSchema}
           defaultValues={{ username: 'admin', password: 'zxcv1234' }}
         >
-          <Row>
-            <Col>
-              <TextInput
-                name="username"
-                label={t('ID')}
-                type="text"
-                placeholder={t('Enter your id')}
-                containerClass="mb-3"
-              />
-            </Col>
-          </Row>
+          <TextInput
+            name="username"
+            label={t('ID')}
+            type="text"
+            placeholder={t('아이디')}
+          />
+          
           <PasswordInput
             label={t('Password')}
             name="password"
-            placeholder={t('Enter your password')}
-            containerClass="mb-3"
+            placeholder={t('비밀번호')}
+            className={`${errorAni}`}
           >
-            <Link to="/account/recover-password" className="text-muted float-end">
+            {/* <Link to="/account/recover-password" className="text-muted float-end">
               <small>Forgot your password?</small>
-            </Link>
+            </Link> */}
           </PasswordInput>
           
           <div className="mb-3 text-center">
             {loading ?
               <Spinner color='primary' size='sm' className='m-auto'/>
               :
-              <Button variant="primary" type="submit">
-                {t('Log In')}
+              <Button variant="primary" type="submit" onClick={() => handleErrorAni()}>
+                {t('로그인')}
               </Button>
             }
             
