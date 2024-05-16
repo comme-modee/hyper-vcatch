@@ -237,8 +237,11 @@ const KeywordTable = () => {
                     <div className='client'><p>{item.client}</p></div>
                     <div className='platform'><p>{item.platform}</p></div>
                     <div className='keyword'><p>{item.keyword}</p></div>
-                    <div className='goal'><p>{item.goalrank}</p></div>
-                    <div className='current'><p>{item.currentrank}</p></div>
+                    <div className='goal'><p>{item.platform === '연관 검색어' ? '-' : item.goalrank}</p></div>
+                    <div className='current'>
+                      <p>{item.platform === '연관 검색어' && item.currentrank === 1 ? <i className='uil uil-circle font-14 custom-bold'/> : 
+                          item.platform === '연관 검색어' && item.currentrank === 0 ? <i className='uil uil-multiply font-14 custom-bold'/> : 
+                          item.currentrank}</p></div>
                     <div className='title'><p>{item.title}</p></div>
                     <div className='url'><p>{item.url}</p></div>
                     <div className='edit' onClick={() => getSingleKeywordData(item.seq)}><i className='ri-pencil-line text-primary'></i></div>
@@ -321,12 +324,14 @@ const KeywordTable = () => {
                     <label htmlFor='url'>URL</label>
                     <input id='url' className={`form-control ${isAddModalError && addUrl === '' ? `error ${errorAni}` : ''}`} value={addUrl} onChange={(e) => setAddUrl(e.target.value)}></input>
                   </div>
-                  <div>
-                    <label htmlFor='goal'>모니터링 목표순위</label>
-                    <Form.Select id='goal-select' defaultValue='5' aria-label="Default select example" onChange={(e) => setAddGoalrank(e.target.value)}>
-                      {goalrankNumber && goalrankNumber.map((num) => <option key={num} value={num}>{num}위</option>)}
-                    </Form.Select>
-                  </div>
+                  {addPlatform !== '연관 검색어' ?
+                    <div>
+                      <label htmlFor='goal'>모니터링 목표순위</label>
+                      <Form.Select id='goal-select' defaultValue='5' aria-label="Default select example" onChange={(e) => setAddGoalrank(e.target.value)}>
+                        {goalrankNumber && goalrankNumber.map((num) => <option key={num} value={num}>{num}위</option>)}
+                      </Form.Select>
+                    </div> : ''
+                  }
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="primary" onClick={() => handleAddKeyword()}>

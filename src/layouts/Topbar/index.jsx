@@ -164,7 +164,7 @@ const Topbar = ({ topbarDark, toggleMenu, navOpen }) => {
 
 					{/* 클라이언트 셀렉트 박스 */}
 					{showClientSelectBox ? 
-						<Form.Select id='client-select' defaultValue={clientUid || ''} aria-label="Default select example" onChange={(e) => setClient(e.target.value)}>
+						<Form.Select id='topbar-client-select' defaultValue={clientUid || ''} aria-label="Default select example" onChange={(e) => setClient(e.target.value)}>
 							<option value=''>클라이언트 선택</option>
 							{clientListData && clientListData.map((client, index) => <option key={`${client.client_uid}${index}`} value={client.client_uid}>{client.client_name}</option>)}
 						</Form.Select>

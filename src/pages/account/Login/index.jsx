@@ -62,7 +62,7 @@ export default function Login() {
         <Form
           onSubmit={login}
           schema={loginFormSchema}
-          defaultValues={{ username: 'admin', password: 'zxcv1234' }}
+          // defaultValues={{ username: 'admin', password: 'zxcv1234' }}
         >
           <TextInput
             name="username"

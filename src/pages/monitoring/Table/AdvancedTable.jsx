@@ -117,11 +117,21 @@ const AdvancedTable = ( {type} ) => {
           if (type === 'week') {
               for(let i = 9; i<=17; i++) {
                 if(i !== 12) {
+                  if (data.platform === '연관 검색어' && item[`h${setHour(i)}`] === 0) {
+                    item[`h${setHour(i)}`] = 'X';
+                  } else if (data.platform === '연관 검색어' && item[`h${setHour(i)}`] === 1) {
+                    item[`h${setHour(i)}`] = 'O';
+                  }
                   data[`h${setHour(i)}`] = item[`h${setHour(i)}`];
                 }
               }
           } else if (type === '24hour') {
               for (let i = 0; i <= 23; i++) {
+                  if (data.platform === '연관 검색어' && item[`h${setHour(i)}`] === 0) {
+                    item[`h${setHour(i)}`] = 'X';
+                  } else if (data.platform === '연관 검색어' && item[`h${setHour(i)}`] === 1) {
+                    item[`h${setHour(i)}`] = 'O';
+                  }
                   data[`h${setHour(i)}`] = item[`h${setHour(i)}`];
               }
           } else if (type === 'month') {
@@ -134,10 +144,11 @@ const AdvancedTable = ( {type} ) => {
           return data;
       });
       setSortData(temp)
-
+      
       setTotalPage(MonitoringData.totalpage)
     }
   },[MonitoringData])
+  console.log(sortData)
 
   const RoundedPagination = () => {
       let items = [];

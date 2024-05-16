@@ -168,7 +168,7 @@ const MonitoringTable = ( {type: dataType, data, isToday, isSwitchOn} ) => {
                                 <div className='goalrank'><p className='mo'>목표순위</p><p>{item.goalrank}</p></div>
                                 <div className='title'><p>{item.title || '-'}</p></div>
                                 <div className='url'>
-                                  {item.platform === '자동완성' ? <p>{item.url}</p> :
+                                  {['자동완성', '연관 검색어'].includes(item.platform) ? <p>{item.url}</p> :
                                   <><span onClick={()=>copyURL(item.url)}><i className='ri-file-copy-2-line'/></span>
                                   <Link to={item.url} target='_blank'><i className='ri-links-fill'/></Link></>
                                   }
@@ -213,7 +213,10 @@ const MonitoringTable = ( {type: dataType, data, isToday, isSwitchOn} ) => {
                                 ${item[`h${setHour(hour)}`] > item.goalrank ? 'text-warning' : ''} 
                                 ${item[`h${setHour(hour)}`] === 0 ? 'text-danger' : ''}`
                               }>
-                                {item[`h${setHour(hour)}`] === 0 ? '-' : item[`h${setHour(hour)}`]}
+                                {item[`h${setHour(hour)}`] === 0 ? '-' : 
+                                 item[`h${setHour(hour)}`] === 'X' ? <i className='uil uil-multiply font-14 text-danger custom-bold'/> :
+                                 item[`h${setHour(hour)}`] === 'O' ? <i className='uil uil-circle font-14 text-success custom-bold'/> :
+                                item[`h${setHour(hour)}`]}
                               </p>
                           </div>
                       )}
@@ -221,7 +224,7 @@ const MonitoringTable = ( {type: dataType, data, isToday, isSwitchOn} ) => {
                       <div className='goalrank'><p className='mo'>목표순위</p><p>{item.goalrank}</p></div>
                       <div className='title'><p>{item.title || '-'}</p></div>
                       <div className='url'>
-                        {item.platform === '자동완성' ? <p>{item.url}</p> :
+                        {['자동완성', '연관 검색어'].includes(item.platform) ? <p>{item.url}</p> :
                         <><span onClick={()=>copyURL(item.url)}><i className='ri-file-copy-2-line'/></span>
                         <Link to={item.url} target='_blank'><i className='ri-links-fill'/></Link></>
                         }
@@ -261,7 +264,10 @@ const MonitoringTable = ( {type: dataType, data, isToday, isSwitchOn} ) => {
                                ${item[`h${setHour(hour)}`] === 0 ? 'text-danger' : ''} 
                                ${item[`h${setHour(hour)}`] > item.goalrank ? 'text-warning' : ''}`
                             }>
-                              {item[`h${setHour(hour)}`] === 0 ? '-' : item[`h${setHour(hour)}`]}
+                              {item[`h${setHour(hour)}`] === 0 ? '-' : 
+                              item[`h${setHour(hour)}`] === 'X' ? <i className='uil uil-multiply font-14 text-danger custom-bold'/> :
+                              item[`h${setHour(hour)}`] === 'O' ? <i className='uil uil-circle font-14 text-success custom-bold'/> :
+                              item[`h${setHour(hour)}`]}
                             </p>
                         </div>
                     ))}
@@ -278,7 +284,7 @@ const MonitoringTable = ( {type: dataType, data, isToday, isSwitchOn} ) => {
                     <div className='goalrank'><p className='mo'>목표순위</p><p>{item.goalrank}</p></div>
                     <div className='title'><p>{item.title || '-'}</p></div>
                     <div className='url'>
-                      {item.platform === '자동완성' ? <p>{item.url}</p> :
+                      {['자동완성', '연관 검색어'].includes(item.platform) ? <p>{item.url}</p> :
                       <><span onClick={()=>copyURL(item.url)}><i className='ri-file-copy-2-line'/></span>
                       <Link to={item.url} target='_blank'><i className='ri-links-fill'/></Link></>
                       }

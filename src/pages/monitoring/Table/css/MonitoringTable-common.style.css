@@ -4,3 +4,4 @@
 
 .monitoring-card > .card-body > .search-area { display: flex; gap: 0.75rem; }
 .monitoring-card select { width: 200px; }
+.custom-bold:before { font-weight: 700; }
