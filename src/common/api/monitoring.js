@@ -218,6 +218,7 @@ function Monitoring() {
           try {
             HttpClient.put('/client/client', {
               client_uid: values.client_uid,
+              client_name: values.client_name,
               client_memo: values.client_memo
             })
             .then(response => {

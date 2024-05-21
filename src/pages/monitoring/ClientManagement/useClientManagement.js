@@ -59,15 +59,15 @@ export default function useClientManagement() {
 				if (res) {
 					// console.log("클라이언트 추가: ", res)
                     showNotification({ message: '클라이언트 생성이 완료되었습니다.', type: 'success' });
+					setAddDataLoading(false);
 				} else {
+					showNotification({ message: '이미 존재하는 클라이언트명입니다.', type: 'error' });
 					console.log("클라이언트 추가 실패")
 				}
 			} catch (error) {
 				console.log(error)
 				// showNotification({ message: '데이터를 불러오지 못했습니다. 새로고침해주세요.', type: 'error' });
-			} finally {
-				setAddDataLoading(false);
-			}
+			} 
 		}
 		
 	};
@@ -108,6 +108,7 @@ export default function useClientManagement() {
 				// console.log("2", values)
 				let response = await monitoring.editClient({
 					client_uid: values.seq,
+					client_name: values.client,
 					client_memo: values.memo,
 				});
 				// console.log("3", data)

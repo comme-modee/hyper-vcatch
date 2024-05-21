@@ -91,9 +91,16 @@ const AdvancedTable = () => {
   //추가&삭제&수정 끝난 뒤 데이터 재호출
   useEffect(()=>{
 
+    if(addDataLoading) {
+      setIsAddModalOpen(true)
+    } else {
+      setIsAddModalOpen(false)
+    }
+
     if(!addDataLoading || !deleteDataLoading || !editDataLoading ) {
       getClientData({ page: currentPage, rows: rows, client })
     }
+    
 
   },[addDataLoading, deleteDataLoading, editDataLoading])
   
@@ -102,7 +109,6 @@ const AdvancedTable = () => {
   const handleAddClient = () => {
     if(clientName) {
       setIsInputError(false)
-      setIsAddModalOpen(false)
       addClientData({clientName, clientMemo})
     } else {
       setIsInputError(true)
@@ -113,14 +119,15 @@ const AdvancedTable = () => {
   //생성 안하고 닫기 누르면 인풋 빨간테두리 사라짐
   useEffect(()=>{
     if(!isAddModalOpen) {
+      setClientName('')
       setIsInputError(false)
     }
   },[isAddModalOpen])
 
 
   //수정버튼
-  const handleEditClient = (seq, memo) => {
-    editClientData({ seq,memo })
+  const handleEditClient = (seq, client, memo) => {
+    editClientData({ seq, client, memo })
     setIsEditModalOpen(false)
   }
   
@@ -276,7 +283,7 @@ const AdvancedTable = () => {
                 <Modal.Body>
                   <div className='mb-2'>
                     <label htmlFor='client-group'>클라이언트 그룹명</label>
-                    <input id='client-group' className='form-control form-control-light' value={editModalClient} readOnly></input>
+                    <input id='client-group' className='form-control' value={editModalClient} onChange={(e) => setEditModalClient(e.target.value)}></input>
                   </div>
                   <div>
                     <label htmlFor='client-memo'>메모</label>
@@ -284,7 +291,7 @@ const AdvancedTable = () => {
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="primary" onClick={() => handleEditClient(editModalSeq, editModalMemo)}>
+                  <Button variant="primary" onClick={() => handleEditClient(editModalSeq, editModalClient, editModalMemo)}>
                     수정
                   </Button>
                   <Button variant="light" onClick={() => setIsEditModalOpen(false)}>
