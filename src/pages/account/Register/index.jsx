@@ -45,13 +45,13 @@ export default function Register() {
 				<Form
 					onSubmit={register}
 					schema={schema}
-					defaultValues={{
-						username: 'user1234',
-						password1: 'test1234',
-						password2: 'test1234',
-						phone: '01033334444',
-						email: 'user1@gmail.com',
-					}}
+					// defaultValues={{
+					// 	username: 'user1234',
+					// 	password1: 'test1234',
+					// 	password2: 'test1234',
+					// 	phone: '01033334444',
+					// 	email: 'user1@gmail.com',
+					// }}
 				>
 					<IdInput
 						label={t('아이디')}

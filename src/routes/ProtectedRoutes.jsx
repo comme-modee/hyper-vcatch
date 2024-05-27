@@ -66,6 +66,6 @@ export default function ProtectedRoutes() {
 			)
 		}
 	} else {
-		return <Navigate to="/account/login" replace />
+		return <Navigate to="/" replace />
 	}
 }

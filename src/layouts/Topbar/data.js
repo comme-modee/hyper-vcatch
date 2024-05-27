@@ -87,7 +87,7 @@ const profileMenus = [
 	{
 		label: '로그아웃',
 		icon: 'mdi mdi-logout',
-		redirectTo: '/account/logout',
+		redirectTo: '/logout',
 	},
 ];
 

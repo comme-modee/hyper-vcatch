@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { createContext, useContext, useState, useCallback } from 'react';
 
 const UserInfoContext = createContext({});

@@ -18,7 +18,7 @@ const BottomLink = () => {
       <Col className="text-center">
         <p className="text-muted">
           {t("계정이 없으신가요?")}
-          <Link to="/account/register" className="text-muted ms-1">
+          <Link to="/register" className="text-muted ms-1">
             <b>{t('회원가입')}</b>
           </Link>
         </p>
@@ -52,7 +52,7 @@ export default function Login() {
     <>
       {/* {isAuthenticated && <Navigate to={redirectUrl} replace />} */}
       
-      <PageBreadcrumb title="Login" />
+      {/* <PageBreadcrumb title="Login" /> */}
       <AccountWrapper bottomLinks={<BottomLink />}>
 
         <div className="text-center w-75 m-auto">
@@ -69,6 +69,7 @@ export default function Login() {
             label={t('ID')}
             type="text"
             placeholder={t('아이디')}
+            className={`${errorAni}`}
           />
           
           <PasswordInput

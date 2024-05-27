@@ -8,14 +8,19 @@ const ErrorCodeMessages= {
 
 function HttpClient() {
 	
-	const _errorHandler = (error) =>
-	Promise.reject(
-		Object.keys(ErrorCodeMessages).includes(error?.response?.status)
-		? ErrorCodeMessages[error.response.status]
-		: error.response.data && error.response.data.message
-		? error.response.data.message
-		: error.message || error
-		);
+	const _errorHandler = (error) => {
+		if(error?.response?.status === 401) {
+			console.log('401 Unauthorized error. Redirecting to login page.')
+			localStorage.clear();
+		}
+		return Promise.reject(
+			Object.keys(ErrorCodeMessages).includes(error?.response?.status)
+			? ErrorCodeMessages[error.response.status]
+			: error.response.data && error.response.data.message
+			? error.response.data.message
+			: error.message || error
+		)
+	};
 		
 		const _httpClient = axios.create({
 			// baseURL: process.env.VITE_API_URL,
